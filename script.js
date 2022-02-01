@@ -61,7 +61,7 @@ function renderBig(){
 }
 
 function mouseReleased(){
-  window.location.href = "../MainCode/index.html";
+  window.location.href = "MainCode/index.html";
 
 }
 

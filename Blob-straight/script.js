@@ -1,5 +1,5 @@
 let shape = [];
-let qty = 20;
+let qty = 35;
 
 let storedDistance = 1000;
 
@@ -45,11 +45,18 @@ render();
 
 function render(){
   background(0);
+  fill(80, 0, 255);
+
 beginShape();
 vertex(shape[shape.length-1][0], shape[shape.length-1][1]);
 for (i = 0; i < shape.length; i++){
 curveVertex(shape[i][0], shape[i][1]);
 }
 
+
 endShape();
+fill(255);
+for (i = 0; i < shape.length; i++){
+ellipse(shape[i][0], shape[i][1], 4, 4);
+}
 }

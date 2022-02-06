@@ -15,6 +15,8 @@ function setup() {
 	shader(metaballShader);
 
 	for (let i = 0; i < N_balls; i ++) metaballs.push(new Metaball(i));
+
+  mouseDragged();
 }
 
 function mouseDragged() {

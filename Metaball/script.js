@@ -57,7 +57,7 @@ class Metaball {
 		this.radius = 20 * size + 5;
 
 		//this.pos = new p5.Vector(random(this.radius, width - this.radius), random(this.radius, height - this.radius));
-    this.pos = new p5.Vector(random((width/2)-200, (width/2)+200), random((height/2)-200, (height/2)+200));
+    this.pos = new p5.Vector(random((width/2)-150, (width/2)+150), random((height/2)-150, (height/2)+150));
 	}
 
   getClosest(){

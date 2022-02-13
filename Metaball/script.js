@@ -3,7 +3,7 @@ let smallestDistance = 1000;
 let chosen;
 let active = 0;
 
-const N_balls = 60,
+const N_balls = 14,
 			metaballs = [];
 
 function preload() {
@@ -54,7 +54,7 @@ class Metaball {
     this.id = i;
     // Harvested from the original code
 		//this.vel = p5.Vector.random2D().mult(5 * (1 - size) + 2);
-		this.radius = 20 * size + 5;
+		this.radius = 60 * size + 8;
 
 		//this.pos = new p5.Vector(random(this.radius, width - this.radius), random(this.radius, height - this.radius));
     this.pos = new p5.Vector(random((width/2)-150, (width/2)+150), random((height/2)-150, (height/2)+150));

@@ -48,7 +48,11 @@ function calcDimensions() {
 }
 
 function makeSlider(mY) {
-  sliderQty = int(map(mY, 0, height, 0, 20)); // tether with below constraint?
+
+  // make an explicit constraint
+
+  mY = constrain(mY, 8 * hMax, height - (8 * hMax));
+  sliderQty = int(map(mY, 8 * hMax, height - (8 * hMax), 3, 20)); // tether with below constraint?
 
   sliderImg.clear();
   sliderImg.stroke(125);
@@ -56,9 +60,9 @@ function makeSlider(mY) {
   sliderImg.line(8 * hMax, 8 * hMax, 8 * hMax, height - (8 * hMax));
   sliderImg.stroke(255);
   sliderImg.strokeWeight(7 * hMax);
-  sliderImg.line(8 * hMax, 8 * hMax, 8 * hMax, constrain(mY, 8 * hMax, height - (8 * hMax)));
+  sliderImg.line(8 * hMax, 8 * hMax, 8 * hMax, mY);
   sliderImg.imageMode(CENTER);
-  sliderImg.image(sliderIcon, 8 * hMax, constrain(mY, 8 * hMax, height - (8 * hMax)), 8.5 * hMax, 8.5 * hMax);
+  sliderImg.image(sliderIcon, 8 * hMax, mY, 8.5 * hMax, 8.5 * hMax);
   sliderImg.fill(244);
   sliderImg.noStroke();
   sliderImg.text(sliderQty, 12*hMax, mY, 100, 100);

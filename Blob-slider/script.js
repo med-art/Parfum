@@ -14,15 +14,17 @@ let storedDistance = 1000;
 function setup(){
   createCanvas(windowWidth, windowHeight);
 
-  // background(255);
-  //
-  // fill(80, 0, 255);
-  //
-  // ellipse(width/2, height/2)
+  background(0);
+  noStroke();
+  fill(215, 140, 255);
+  let margin = 200;
+
+  ellipse(margin, margin, margin, margin);
+  rect(width-(margin/2), margin, width-margin, margin*2);
 
 
 
-  setupDrawing();
+//  setupDrawing();
 }
 
 function setupDrawing() {

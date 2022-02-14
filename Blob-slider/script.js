@@ -11,8 +11,22 @@ let sliderIcon;
 
 let storedDistance = 1000;
 
-function setup() {
+function setup(){
   createCanvas(windowWidth, windowHeight);
+
+  // background(255);
+  //
+  // fill(80, 0, 255);
+  //
+  // ellipse(width/2, height/2)
+
+
+
+  setupDrawing();
+}
+
+function setupDrawing() {
+
   sliderImg = createGraphics(windowWidth, windowHeight);
   sliderIcon = loadImage('assets/slider.png');
   noStroke();

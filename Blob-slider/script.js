@@ -86,8 +86,7 @@ function makeSlider(mY) {
   // make an explicit constraint
 
   mY = constrain(mY, 8 * hMax, height - (8 * hMax));
-  sliderQty = int(map(mY, 8 * hMax, height - (8 * hMax), 3, 30)); // tether with below constraint?
-
+  sliderQty = 1+int(map(mY, 8 * hMax, height - (8 * hMax), 3, 30)); // tether with below constraint?
   sliderImg.clear();
   sliderImg.stroke(125);
   sliderImg.strokeWeight(7 * hMax);
@@ -104,6 +103,8 @@ function makeSlider(mY) {
 
 
 function interpolate() {
+
+
 
   // IF CURVE NEEDS TO INCREASE
   if (sliderQty > shape.length) {

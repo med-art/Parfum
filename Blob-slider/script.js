@@ -10,6 +10,8 @@ let hMax, vMax, vMin, vW;
 let sliderIcon;
 
 let sV = [];
+let c;
+let vt;
 
 let storedDistance = 1000;
 
@@ -32,10 +34,12 @@ function setupDrawing() {
   sliderIcon = loadImage('assets/slider.png');
   noStroke();
   // stroke(255);
+retrieveCol();
   fill(c);
 
-  for (let i = 0; i < curveQty; i++) {
-    let angle = ((2 * PI) / curveQty) * i;
+
+  for (let i = 0; i < vt; i++) {
+    let angle = ((2 * PI) / vt) * i;
     let v = createVector((width / 2) + (width / 5) * cos(angle), (height / 2) + (width / 5) * sin(angle));
     shape.push(v)
   }
@@ -54,6 +58,10 @@ function retrieveCol(){
   let chosenColour = importColour.split(",");
   var cccc = chosenColour.map(String);
   c = color(parseInt(chosenColour[0]), parseInt(chosenColour[1]), parseInt(chosenColour[2]));
+
+  vt = localStorage.chosenVertice;
+
+
 }
 
 

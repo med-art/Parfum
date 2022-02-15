@@ -48,7 +48,10 @@ retrieveCol();
   // slider.position(10, 10);
   // slider.style('width', '260px');
 
-  makeSlider(height/2);
+
+  //change imported Vertex into slider position
+  let s = int(map(vt, 3, 30,  8 * hMax, height - (8 * hMax))); // tether with below constraint?
+  makeSlider(s);
 
   render();
 }
@@ -83,7 +86,7 @@ function makeSlider(mY) {
   // make an explicit constraint
 
   mY = constrain(mY, 8 * hMax, height - (8 * hMax));
-  sliderQty = int(map(mY, 8 * hMax, height - (8 * hMax), 3, 20)); // tether with below constraint?
+  sliderQty = int(map(mY, 8 * hMax, height - (8 * hMax), 3, 30)); // tether with below constraint?
 
   sliderImg.clear();
   sliderImg.stroke(125);

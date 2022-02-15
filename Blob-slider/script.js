@@ -9,6 +9,8 @@ let sliderImg;
 let hMax, vMax, vMin, vW;
 let sliderIcon;
 
+let sV = [];
+
 let storedDistance = 1000;
 
 function setup(){
@@ -16,15 +18,12 @@ function setup(){
 
   background(0);
   noStroke();
-  fill(215, 140, 255);
+  fill(215, 140, 255); // todo inherit
   let margin = 200;
+  calcDimensions();
 
-  ellipse(margin, margin, margin, margin);
-  rect(width-(margin/2), margin, width-margin, margin*2);
-
-
-
-//  setupDrawing();
+retrieveCol();
+ setupDrawing();
 }
 
 function setupDrawing() {
@@ -33,7 +32,7 @@ function setupDrawing() {
   sliderIcon = loadImage('assets/slider.png');
   noStroke();
   // stroke(255);
-  fill(80, 0, 255);
+  fill(c);
 
   for (let i = 0; i < curveQty; i++) {
     let angle = ((2 * PI) / curveQty) * i;
@@ -44,11 +43,19 @@ function setupDrawing() {
   // slider = createSlider(3, 30, curveQty);
   // slider.position(10, 10);
   // slider.style('width', '260px');
-  calcDimensions();
+
   makeSlider(height/2);
 
   render();
 }
+
+function retrieveCol(){
+  let importColour = localStorage.chosenColour;
+  let chosenColour = importColour.split(",");
+  var cccc = chosenColour.map(String);
+  c = color(parseInt(chosenColour[0]), parseInt(chosenColour[1]), parseInt(chosenColour[2]));
+}
+
 
 function calcDimensions() {
   vW = width / 100;
@@ -185,7 +192,7 @@ function touchEnded() {
 
 function render() {
   background(0);
-  fill(215, 140, 255);
+  fill(c);
 
   //combine via separate layers?
   beginShape();

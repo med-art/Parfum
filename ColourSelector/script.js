@@ -61,7 +61,7 @@ function renderBig(){
 }
 
 function mouseReleased(){
-  window.location.href = "shapeChooser/index.html";
+  window.location.href = "../shapeChooser/index.html";
 
 }
 

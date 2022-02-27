@@ -1,13 +1,17 @@
 let shape = [];
+let archivedShape = [];
 let curveQty = 10;
 // let slider;
 let sliderQty = 0;
+let archivedSlider = 0;
 let chosen;
 let sculptActive;
 let smooth;
 let sliderImg;
 let hMax, vMax, vMin, vW;
 let sliderIcon;
+let undoButton;
+let undoActive = 0;
 
 let sV = [];
 let c;
@@ -99,6 +103,8 @@ function makeSlider(mY) {
   sliderImg.fill(244);
   sliderImg.noStroke();
   sliderImg.text(sliderQty, 12*hMax, mY, 100, 100);
+
+
 }
 
 
@@ -172,23 +178,24 @@ function touchStarted() {
 }
 
 function mouseDragged() {
-
   if (mouseX > (20 * hMax)) {
-
     // sliderQty = slider.value();
     // IF THE POINTS DON'T MATCH
-
-
-
     if (sculptActive) {
       shape[chosen].x = mouseX;
       shape[chosen].y = mouseY;
+      // TODO: Run a check
+      removeButton();
     }
-
   } else {
+
+
+    // if the button is not there, then create it. note use of explicit undoActive.
+    // tried checking buttonMaker after deleted, but Boolean still came back positive.
+    if(!undoActive){
+    buttonMaker();
+  }
     makeSlider(mouseY);
-
-
   }
   if (!(sliderQty == shape.length)) {
     interpolate();
@@ -201,12 +208,39 @@ function touchEnded() {
   sculptActive = 0;
 }
 
+function buttonMaker(){
+  // first make an archive of the current curve
+  archivedShape = shape.slice();
+  archivedSlider = sliderQty;
+  console.log("archive Created")
+  // TODO: move to separate function for clarity?
+  undoActive = 1;
+  undoButton = createButton('undo');
+  undoButton.position(100,mouseY);
+  undoButton.mousePressed(undo);
+}
+
+function undo(){
+  removeButton();
+  shape = archivedShape.slice();
+
+  // // TODO: Search for identical syntax (replaced archivedSlider with vt) This is present above, needs to be refined
+  let s = int(map(archivedSlider, 3, 30,  8 * hMax, height - (8 * hMax))); // tether with below constraint?
+  makeSlider(s);
+
+  console.log("archive retrieved")
+  render();
+}
+
+function removeButton(){
+undoActive  = 0;
+undoButton.remove();
+}
 
 function render() {
   background(0);
   fill(c);
-
-  //combine via separate layers?
+    //combine via separate layers?
   beginShape();
   if (smooth) {
     curveVertex(shape[shape.length - 2].x, shape[shape.length - 2].y);

@@ -13,10 +13,11 @@ let squareSwatch, chosenSwatch;
         ["#5f0618", "#5f154a", "#511e60", "#2c1d5e", "#221d5d", "#1d2d5e", "#135760", "#106047", "#1c6132", "#3b612e", "#5c5f2a", "#5f3914", "#60130d", "#000000"]
     ];
     function setup() {
-        createCanvas(windowWidth, windowHeight);
+        var canvas = createCanvas(windowWidth, windowHeight-50);
+          canvas.parent('sketch-holder');
         squareSwatch = createGraphics(width, height);
         chosenSwatch = createGraphics(width, height);
-        background(255);
+        background(0);
         squareSwatch.colorMode(RGB);
         chosenSwatch.colorMode(RGB);
         squareSwatch.noStroke();
@@ -54,6 +55,7 @@ let squareSwatch, chosenSwatch;
     }
 
 function render(){
+  background(0);
   image(squareSwatch, 0, 0, width, height);
 }
 function renderBig(){

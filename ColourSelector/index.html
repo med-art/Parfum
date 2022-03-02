@@ -2,6 +2,11 @@
 <head>
     <meta charset="utf-8">
     <title>DrawMeAnOdour</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+
     <script src="../libraries/p5.js"></script>
       <script src="../libraries/p5.sound.js"></script>
 
@@ -13,11 +18,26 @@
             z-index: 1;
         }
 
+        body{
+          background-color: 0;
+         font-family: "Roboto", sans-serif;
+         font-weight: 100;
+                   color: white;
+                   text-align: center;
+        }
+
+        #sketch-holder{
+          margin-top: 50px;
+        }
+
     </style>
     <head>
     <body>
         <div class="fixed2" id="sketch-holder">
             <script language="javascript" type="text/javascript" src="script.js"></script>
+        </div>
+        <h2>Please choose a colour that you think corresponds to the odour</h2>
+        <div id="sketch-holder">
         </div>
 
 

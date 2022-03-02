@@ -20,8 +20,8 @@ let storedDistance = 1000;
 function setup(){
 
 
-    createCanvas(windowWidth, windowHeight);
-
+   canvas = createCanvas(windowWidth, windowHeight-55);
+    canvas.parent('sketch-holder');
     background(0);
     noStroke();
     retrieveCol();

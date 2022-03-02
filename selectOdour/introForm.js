@@ -61,84 +61,128 @@ var surveyJSON = {
     "title": "",
     "logoPosition": "right",
     "pages": [{
-        "name": "page1",
-        "elements": [{
-          "type": "radiogroup",
-          "name": "question1",
-          "title": "Which odour have you selected?",
-          "isRequired": true,
-          "choices": [{
-              "value": "A",
-              "text": "A"
-            },
-            {
-              "value": "B",
-              "text": "B"
-            },
-            {
-              "value": "C",
-              "text": "C"
-            }
-          ],
-          "colCount": 3
-        }],
-        "title": "Odour Selection",
-        "description": "Please select any of the odours labelled with the letter 'A', 'B' or 'C', and choose the corresponding letter below."
-      },
-      {
-        "name": "page2",
-        "elements": [{
-            "type": "expression",
-            "name": "question2",
-            "title": "Your currently selected odour:",
-              "hideNumber": true,
-            "expression": "{question1}"
-
+          "name": "page1",
+          "elements": [{
+            "type": "imagepicker",
+            "name": "question1",
+            "titleLocation": "hidden",
+            "isRequired": true,
+            "choices": [{
+                "value": "item1",
+                "imageLink": "a.png"
+              },
+              {
+                "value": "item2",
+                "imageLink": "b.png"
+              },
+              {
+                "value": "item3",
+                "imageLink": "c.png"
+              }
+            ],
+            "imageHeight": 100,
+            "imageWidth": 100
+          }],
+          "title": "Odour Selection",
+          "description": "Please select any of the odours labelled with the letter 'A', 'B' or 'C', and choose the corresponding letter below."
         },
         {
-          "type": "rating",
-          "name": "Hedonicity",
-          "minWidth": "825px",
-          "title": "Hédonicité (apprécier ou désapprouver) / Hedonicity (like or dislike)",
-          "titleLocation": "hidden",
-          "description": "Notez en fonction de votre perception sur l'hédonisme de tres desagreable a tres agreable. (4) pour Neutre / Rate according to your perceived Hedonicity from 'Very Unpleasant' (1) to ‘Very Pleasing’ (7). Neutral is (4). ",
-          "isRequired": true,
-          "rateMax": 7,
-          "minRateDescription": "Tres desagreable",
-          "maxRateDescription": "Tres agreable"
+          "name": "page2",
+          "elements": [{
+              "type": "panel",
+              "name": "panel1",
+              "elements": [
+                  {
+                    "type": "image",
+                    "name": "question4",
+                    "visibleIf": "{question1} = 'item1'",
+                    "imageLink": "a.png"
+                  },
+                  {
+                    "type": "image",
+                    "name": "question4",
+                    "visibleIf": "{question1} = 'item2'",
+                    "imageLink": "b.png"
+                  },
+                  {
+                    "type": "image",
+                    "name": "question4",
+                    "visibleIf": "{question1} = 'item3'",
+                    "imageLink": "c.png"
+                  }
+                ],
+                    "title": "Your selected odour is"
+                },
+                {
+                  "type": "rating",
+                  "name": "Hedonicity",
+                  "minWidth": "825px",
+                  "title": "Hédonicité (apprécier ou désapprouver) / Hedonicity (like or dislike)",
+                  "titleLocation": "hidden",
+                  "description": "Notez en fonction de votre perception sur l'hédonisme de tres desagreable a tres agreable. (4) pour Neutre / Rate according to your perceived Hedonicity from 'Very Unpleasant' (1) to ‘Very Pleasing’ (7). Neutral is (4). ",
+                  "isRequired": true,
+                  "rateMax": 7,
+                  "minRateDescription": "Tres desagreable / Very unpleasant",
+                  "maxRateDescription": "Tres agreable / Very pleasant"
+                }
+              ],
+              "title": "Hédonicité (apprécier ou désapprouver) / Hedonicity (like or dislike)",
+              "description": "Notez en fonction de votre perception sur l'hédonisme de tres desagreable a tres agreable. (4) pour Neutre / Rate according to your perceived Hedonicity from 'Very Unpleasant' (1) to ‘Very Pleasing’ (7). Neutral is (4)."
+            },
+            {
+              "name": "page3",
+              "elements": [{
+                  "type": "panel",
+                  "name": "panel1",
+                  "elements": [
+                      {
+                        "type": "image",
+                        "name": "question4",
+                        "visibleIf": "{question1} = 'item1'",
+                        "imageLink": "a.png"
+                      },
+                      {
+                        "type": "image",
+                        "name": "question4",
+                        "visibleIf": "{question1} = 'item2'",
+                        "imageLink": "b.png"
+                      },
+                      {
+                        "type": "image",
+                        "name": "question4",
+                        "visibleIf": "{question1} = 'item3'",
+                        "imageLink": "c.png"
+                      }
+                    ],
+                        "title": "Your selected odour is"
+                    },
+                    {
+                "type": "rating",
+                "name": "Intensité / Intensity",
+                "minWidth": "825px",
+                "title": "Intensité / Intensity",
+                "titleLocation": "hidden",
+                "description": "dwe",
+                "isRequired": true,
+                "rateMax": 7,
+                "minRateDescription": " l’Odeur de ‘Pas d’odeur’ / No smell",
+                "maxRateDescription": "à ‘odeur très forte’ / Strong smell "
+              }],
+              "title": "Intensité / Intensity",
+              "description": "Notez en fonction de l'intensité de l’Odeur de ‘Pas d’odeur’ (1) à ‘odeur très forte’ (7). (4) pour Neutre. / Rate according to the Odour intensity from No smell (1) to Smell is Very Strong (7). Neutral is (4). "
+            }
+          ],
+          showCompletedPage: 0
         }
-      ],
-      "title": "Hédonicité (apprécier ou désapprouver) / Hedonicity (like or dislike)",
-      "description": "Notez en fonction de votre perception sur l'hédonisme de tres desagreable a tres agreable. (4) pour Neutre / Rate according to your perceived Hedonicity from 'Very Unpleasant' (1) to ‘Very Pleasing’ (7). Neutral is (4). "
-    },
-    {
-      "name": "page3",
-      "elements": [{
-        "type": "rating",
-        "name": "Intensité / Intensity",
-        "minWidth": "825px",
-        "title": "Intensité / Intensity",
-        "titleLocation": "hidden",
-        "description": "dwe",
-        "rateMax": 7,
-        "minRateDescription": " l’Odeur de ‘Pas d’odeur’",
-        "maxRateDescription": "à ‘odeur très forte’ "
-      }],
-      "title": "Intensité / Intensity",
-      "description": "Notez en fonction de l'intensité de l’Odeur de ‘Pas d’odeur’ (1) à ‘odeur très forte’ (7). (4) pour Neutre. / Rate according to the Odour intensity from No smell (1) to Smell is Very Strong (7). Neutral is (4). "
-    }
-  ],
-  showCompletedPage: 0
-}
 
-function submitData(survey) {
-  //send Ajax request to your web server.
-  // alert("The results are:" + JSON.stringify(survey.data));
-  window.location.href = "../ColourSelector/index.html";
-}
+        function submitData(survey) {
+          //send Ajax request to your web server.
+          // alert("The results are:" + JSON.stringify(survey.data));
+          window.location.href = "../ColourSelector/index.html";
+        }
 
-var survey = new Survey.Model(surveyJSON);
-$("#surveyContainer").Survey({
-  model: survey,
-  onComplete: submitData
-});
+        var survey = new Survey.Model(surveyJSON);
+        $("#surveyContainer").Survey({
+          model: survey,
+          onComplete: submitData
+        });

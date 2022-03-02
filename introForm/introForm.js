@@ -58,7 +58,7 @@ var modernThemeCss = Survey
 
   var surveyJSON = {
 "title": "Before we begin, we want to know a little bit about you",
-"description": "Please answer the 3 following (optional?) questions",
+"description": "Please answer the 3 following questions",
 "logoPosition": "right",
 "pages": [
 {
@@ -68,72 +68,74 @@ var modernThemeCss = Survey
    "type": "dropdown",
    "name": "question1",
    "title": "Age / Âge",
+   "isRequired": true,
    "choices": [
     {
      "value": "item1",
-     "text": "Under 12"
+     "text": "Under 18"
     },
     {
      "value": "item2",
-     "text": "12-17"
+     "text": "18-30"
     },
     {
      "value": "item3",
-     "text": "18-24"
+     "text": "31-40"
     },
     {
      "value": "item4",
-     "text": "25-34"
+     "text": "41-55"
     },
     {
      "value": "item5",
-     "text": "35-44"
+     "text": "55-70"
     },
     {
      "value": "item6",
-     "text": "45-54"
+     "text": "70-85"
     },
     {
      "value": "item7",
-     "text": "55-64"
-    },
-    {
-     "value": "item8",
-     "text": "65-74"
-    },
-    {
-     "value": "item9",
-     "text": "75-84"
-    },
-    {
-     "value": "item10",
-     "text": "85+"
+     "text": "85 or above"
     }
    ]
   },
   {
-   "type": "dropdown",
-   "name": "question2",
-   "title": "Sex / Sexe",
-   "choices": [
-    {
-     "value": "item1",
-     "text": "Male /Masculin"
-    },
-    {
-     "value": "item2",
-     "text": "Female / Féminin"
-    },
-    {
-     "value": "item3",
-     "text": "I would prefer not to say / Je ne souhaite pas le préciser"
-    }
-   ]
+    "type": "expression",
+    "name": "question2",
+    "visibleIf": "{question1} = 'item1'",
+    "titleLocation": "hidden",
+    "expression": "'Please note, we are not able to keep records of any person under the age of 18. You can still continue with the experiment, but your data will not be kept on file'"
   },
   {
    "type": "dropdown",
    "name": "question3",
+   "title": "Sexe / Sex",
+   "isRequired": true,
+   "choices": [
+    {
+     "value": "item1",
+     "text": "Masculin / Male"
+    },
+    {
+     "value": "item2",
+     "text": "Féminin / Female"
+    },
+    {
+     "value": "item3",
+     "text": "Gender Diverse"
+   },
+   {
+    "value": "item4",
+    "text": "Je ne souhaite pas le préciser / I would prefer not to say"
+   }
+   ]
+  },
+  {
+   "type": "dropdown",
+   "name": "question4",
    "title": "What continent or region are you from?",
+    "isRequired": true,
    "choices": [
     {
      "value": "item1",

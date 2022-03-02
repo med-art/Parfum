@@ -79,6 +79,7 @@
 .sv_main .sv_q_file_remove:hover: "color: $main-color;"
 .sv_main .sv_q_imgsel.checked label>div: "background-color: $main-color"
 .sv_main .sv_qstn textarea: "max-width: 100%"
+
 $add-button-color: "#1948b3"
 $answer-background-color: "rgba(26, 179, 148, 0.2)"
 $background-color: "#000000"

@@ -1,14 +1,14 @@
 var modernThemeCss = Survey
-    .StylesManager
-    .ThemeColors["modern"];
-    modernThemeCss["$background-color"] = "#000000";
-    modernThemeCss["$main-color"] = "#FFFFFF"; // also used on the button
-    modernThemeCss["$main-hover-color"] = "#FFFFFF";
-    modernThemeCss["$text-color"] = "#DCDCDC";
-    modernThemeCss["$header-color"] = "#FFFFFF";
-    modernThemeCss["$text-input-color"] = "#C0C0C0";
-    modernThemeCss["$progress-button-color"] = "#C0C0C0";
-    modernThemeCss["$button-text-color"] = "#000000";
+  .StylesManager
+  .ThemeColors["modern"];
+modernThemeCss["$background-color"] = "#000000";
+modernThemeCss["$main-color"] = "#FFFFFF"; // also used on the button
+modernThemeCss["$main-hover-color"] = "#FFFFFF";
+modernThemeCss["$text-color"] = "#DCDCDC";
+modernThemeCss["$header-color"] = "#FFFFFF";
+modernThemeCss["$text-input-color"] = "#C0C0C0";
+modernThemeCss["$progress-button-color"] = "#C0C0C0";
+modernThemeCss["$button-text-color"] = "#000000";
 //     modernThemeCss["$foreground-color"] = "#000000";
 // modernThemeCss["$header-background-color"] = "#FFFFFF";
 // modernThemeCss["$body-container-background-color"] = "#FFFFFF";
@@ -54,138 +54,186 @@ var modernThemeCss = Survey
 
 
 
-  Survey.StylesManager.applyTheme("modern");
+Survey.StylesManager.applyTheme("modern");
 
-  var surveyJSON = {
-"title": "Before we begin, we want to know a little bit about you",
-"description": "Please answer the 3 following questions",
-"logoPosition": "right",
-"pages": [
-{
- "name": "page1",
- "elements": [
-  {
-   "type": "dropdown",
-   "name": "question1",
-   "title": "Age / Âge",
-   "isRequired": true,
-   "choices": [
-    {
-     "value": "item1",
-     "text": "Under 18"
-    },
-    {
-     "value": "item2",
-     "text": "18-30"
-    },
-    {
-     "value": "item3",
-     "text": "31-40"
-    },
-    {
-     "value": "item4",
-     "text": "41-55"
-    },
-    {
-     "value": "item5",
-     "text": "55-70"
-    },
-    {
-     "value": "item6",
-     "text": "70-85"
-    },
-    {
-     "value": "item7",
-     "text": "85 or above"
-    }
-   ]
+var surveyJSON = {
+
+  "title": {
+    "fr": "French title missing",
+    "en": "Before we begin, we want to know a little bit about you"
   },
-  {
-    "type": "expression",
-    "name": "question2",
-    "visibleIf": "{question1} = 'item1'",
-    "titleLocation": "hidden",
-    "expression": "'Please note, we are not able to keep records of any person under the age of 18. You can still continue with the experiment, but your data will not be kept on file'"
+  "description": {
+    "fr": "French description missing",
+    "en": "Please answer the 3 following questions"
   },
-  {
-   "type": "dropdown",
-   "name": "question3",
-   "title": "Sexe / Sex",
-   "isRequired": true,
-   "choices": [
-    {
-     "value": "item1",
-     "text": "Masculin / Male"
-    },
-    {
-     "value": "item2",
-     "text": "Féminin / Female"
-    },
-    {
-     "value": "item3",
-     "text": "Gender Diverse"
-   },
-   {
-    "value": "item4",
-    "text": "Je ne souhaite pas le préciser / I would prefer not to say"
-   }
-   ]
-  },
-  {
-   "type": "dropdown",
-   "name": "question4",
-   "title": "What continent or region are you from?",
-    "isRequired": true,
-   "choices": [
-    {
-     "value": "item1",
-     "text": "Asia"
-    },
-    {
-     "value": "item2",
-     "text": "Africa"
-    },
-    {
-     "value": "item3",
-     "text": "North America"
-    },
-    {
-     "value": "item4",
-     "text": "South America"
-    },
-    {
-     "value": "item5",
-     "text": "Antarctica"
-    },
-    {
-     "value": "item6",
-     "text": "Europe"
-    },
-    {
-     "value": "item7",
-     "text": "Australia/Oceania"
-    },
-    {
-     "value": "item8",
-     "text": "Prefer not to say"
-    }
-   ]
-  }
- ]
-}
-],
-"widthMode": "responsive",
+  "logoPosition": "right",
+  "locale": "fr",
+  "pages": [{
+    "name": "page1",
+    "elements": [{
+        "type": "dropdown",
+        "name": "question1",
+        "title": {
+          "fr": "Âge",
+          "en": "Age"
+        },
+        "isRequired": true,
+        "choices": [{
+            "value": "item1",
+            "text": {
+              "fr": "Under 18 - French translation needed",
+              "en": "Under 18"
+            },
+          },
+          {
+            "value": "item2",
+            "text": "18-30"
+          },
+          {
+            "value": "item3",
+            "text": "31-40"
+          },
+          {
+            "value": "item4",
+            "text": "41-55"
+          },
+          {
+            "value": "item5",
+            "text": "55-70"
+          },
+          {
+            "value": "item6",
+            "text": "70-85"
+          },
+          {
+            "value": "item7",
+            "text": "85+"
+          }
+        ]
+      },
+      {
+        "type": "expression",
+        "name": "question2",
+        "visibleIf": "{question1} = 'item1'",
+        "titleLocation": "hidden",
+        "expression":"'Si vous avez moins de 18 ans, ces données ne seront pas collectées./If you are under 18 years old your data will not be stored'"
+      },
+      {
+        "type": "dropdown",
+        "name": "question3",
+        "title": {
+          "fr": "Sexe",
+          "en": "Gender"
+        },
+        "isRequired": true,
+        "choices": [{
+            "value": "item1",
+            "text": {
+              "fr": "Masculin",
+              "en": "Male"
+            }
+          },
+          {
+            "value": "item2",
+            "text": {
+              "fr":"Féminin",
+              "en": "Female"
+            },
+          },
+          {
+            "value": "item3",
+            "text": {
+              "fr":"Gender Diverse - French translation required",
+              "en":"Gender Diverse"
+            },
+          },
+          {
+            "value": "item4",
+            "text": {
+              "fr":"Je ne souhaite pas le préciser",
+              "en":"I would prefer not to say"},
+          }
+        ]
+      },
+      {
+        "type": "dropdown",
+        "name": "question4",
+        "title": {
+          "fr":"What continent or region are you from? - French translation required",
+          "en":"What continent or region are you from?"
+        },
+        "isRequired": true,
+        "choices": [{
+            "value": "item1",
+            "text": {
+              "fr":"Asia",
+              "en":"Asia"
+            },
+          },
+          {
+            "value": "item2",
+            "text": {
+              "fr":"Africa",
+              "en":"Africa"
+            },
+          },
+          {
+            "text": {
+              "fr":"North America",
+              "en":"North America"
+            },
+          },
+          {
+            "value": "item4",
+            "text": {
+              "fr":"South America",
+              "en":"South America"
+            },
+          },
+          {
+            "value": "item5",
+            "text": {
+              "fr":"Antarctica",
+              "en":"Antarctica"
+            },
+          },
+          {
+            "value": "item6",
+            "text": {
+              "fr":"Europe",
+              "en":"Europe"
+            },
+          },
+          {
+            "value": "item7",
+            "text": {
+              "fr":"Australia/Oceania",
+              "en":"Australia/Oceania"
+            },
+          },
+          {
+            "value": "item8",
+            "text": {
+              "fr":"Prefer not to say",
+              "en":"Prefer not to say"
+            },
+          }
+        ]
+      }
+    ]
+  }],
+  "widthMode": "responsive",
   showCompletedPage: 0
-  }
+}
 
-  function submitData(survey) {
-    //send Ajax request to your web server.
-    // alert("The results are:" + JSON.stringify(survey.data));
-    window.location.href = "../selectOdour/index.html";
-  }
+function submitData(survey) {
+  //send Ajax request to your web server.
+  // alert("The results are:" + JSON.stringify(survey.data));
+  window.location.href = "../selectOdour/index.html";
+}
 
-  var survey = new Survey.Model(surveyJSON);
-  $("#surveyContainer").Survey({
-    model: survey,
-    onComplete: submitData
-  });
+var survey = new Survey.Model(surveyJSON);
+$("#surveyContainer").Survey({
+  model: survey,
+  onComplete: submitData
+});

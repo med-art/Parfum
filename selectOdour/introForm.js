@@ -58,131 +58,213 @@ Survey.StylesManager.applyTheme("modern");
 
 var surveyJSON = {
 
-    "title": "",
-    "logoPosition": "right",
-    "pages": [{
-          "name": "page1",
+  "title": "",
+  "logoPosition": "right",
+  "locale": "fr",
+  "pages": [{
+      "name": "page1",
+      "elements": [{
+        "type": "imagepicker",
+        "name": "question1",
+        "titleLocation": "hidden",
+        "isRequired": true,
+        "choices": [{
+            "value": "item1",
+            "imageLink": "a.png"
+          },
+          {
+            "value": "item2",
+            "imageLink": "b.png"
+          },
+          {
+            "value": "item3",
+            "imageLink": "c.png"
+          }
+        ],
+        "imageHeight": 100,
+        "imageWidth": 100
+      }],
+      "title": {
+        "fr": "Odour Selection - French translation required",
+        "en": "Odour Selection"
+      },
+      "description": {
+        "fr": "French translation required",
+        "en": "Please select any of the odours labelled with the letter 'A', 'B' or 'C', and choose the corresponding letter below."
+      }
+    },
+    {
+      "name": "page2",
+      "elements": [{
+          "type": "panel",
+          "name": "panel1",
           "elements": [{
-            "type": "imagepicker",
-            "name": "question1",
-            "titleLocation": "hidden",
-            "isRequired": true,
-            "choices": [{
-                "value": "item1",
-                "imageLink": "a.png"
-              },
-              {
-                "value": "item2",
-                "imageLink": "b.png"
-              },
-              {
-                "value": "item3",
-                "imageLink": "c.png"
-              }
-            ],
-            "imageHeight": 100,
-            "imageWidth": 100
-          }],
-          "title": "Odour Selection",
-          "description": "Please select any of the odours labelled with the letter 'A', 'B' or 'C', and choose the corresponding letter below."
-        },
-        {
-          "name": "page2",
-          "elements": [{
-              "type": "panel",
-              "name": "panel1",
-              "elements": [
-                  {
-                    "type": "image",
-                    "name": "question4",
-                    "visibleIf": "{question1} = 'item1'",
-                    "imageLink": "a.png"
-                  },
-                  {
-                    "type": "image",
-                    "name": "question4",
-                    "visibleIf": "{question1} = 'item2'",
-                    "imageLink": "b.png"
-                  },
-                  {
-                    "type": "image",
-                    "name": "question4",
-                    "visibleIf": "{question1} = 'item3'",
-                    "imageLink": "c.png"
-                  }
-                ],
-                    "title": "Your selected odour is"
-                },
-                {
-                  "type": "rating",
-                  "name": "Hedonicity",
-                  "minWidth": "825px",
-                  "title": "Hédonicité (apprécier ou désapprouver) / Hedonicity (like or dislike)",
-                  "titleLocation": "hidden",
-                  "description": "Notez en fonction de votre perception sur l'hédonisme de tres desagreable a tres agreable. (4) pour Neutre / Rate according to your perceived Hedonicity from 'Very Unpleasant' (1) to ‘Very Pleasing’ (7). Neutral is (4). ",
-                  "isRequired": true,
-                  "rateMax": 7,
-                  "minRateDescription": "Tres desagreable / Very unpleasant",
-                  "maxRateDescription": "Tres agreable / Very pleasant"
-                }
-              ],
-              "title": "Hédonicité (apprécier ou désapprouver) / Hedonicity (like or dislike)",
-              "description": "Notez en fonction de votre perception sur l'hédonisme de tres desagreable a tres agreable. (4) pour Neutre / Rate according to your perceived Hedonicity from 'Very Unpleasant' (1) to ‘Very Pleasing’ (7). Neutral is (4)."
+              "type": "image",
+              "name": "question4",
+              "visibleIf": "{question1} = 'item1'",
+              "imageLink": "a.png"
             },
             {
-              "name": "page3",
-              "elements": [{
-                  "type": "panel",
-                  "name": "panel1",
-                  "elements": [
-                      {
-                        "type": "image",
-                        "name": "question4",
-                        "visibleIf": "{question1} = 'item1'",
-                        "imageLink": "a.png"
-                      },
-                      {
-                        "type": "image",
-                        "name": "question4",
-                        "visibleIf": "{question1} = 'item2'",
-                        "imageLink": "b.png"
-                      },
-                      {
-                        "type": "image",
-                        "name": "question4",
-                        "visibleIf": "{question1} = 'item3'",
-                        "imageLink": "c.png"
-                      }
-                    ],
-                        "title": "Your selected odour is"
-                    },
-                    {
-                "type": "rating",
-                "name": "Intensité / Intensity",
-                "minWidth": "825px",
-                "title": "Intensité / Intensity",
-                "titleLocation": "hidden",
-                "description": "dwe",
-                "isRequired": true,
-                "rateMax": 7,
-                "minRateDescription": " l’Odeur de ‘Pas d’odeur’ / No smell",
-                "maxRateDescription": "à ‘odeur très forte’ / Strong smell "
-              }],
-              "title": "Intensité / Intensity",
-              "description": "Notez en fonction de l'intensité de l’Odeur de ‘Pas d’odeur’ (1) à ‘odeur très forte’ (7). (4) pour Neutre. / Rate according to the Odour intensity from No smell (1) to Smell is Very Strong (7). Neutral is (4). "
+              "type": "image",
+              "name": "question4",
+              "visibleIf": "{question1} = 'item2'",
+              "imageLink": "b.png"
+            },
+            {
+              "type": "image",
+              "name": "question4",
+              "visibleIf": "{question1} = 'item3'",
+              "imageLink": "c.png"
             }
           ],
-          showCompletedPage: 0
-        }
+          "title": {
+            "fr": "Your selected odour is - French translation required",
+            "en": "Your selected odour is",
+          },
+        },
+        {
+          "type": "rating",
+          "name": "Hedonicity",
+          "minWidth": "825px",
 
-        function submitData(survey) {
-          //send Ajax request to your web server.
-          // alert("The results are:" + JSON.stringify(survey.data));
-          window.location.href = "../ColourSelector/index.html";
+          "titleLocation": "hidden",
+          "isRequired": true,
+          "rateMax": 7,
+          "minRateDescription": {
+            "fr": "Tres desagreable",
+            "en": "Very unpleasant"
+          },
+          "maxRateDescription": {
+            "fr": "Tres agreable",
+            "en": "Very pleasant"
+          },
         }
+      ],
+      "title": {
+        "fr": "Hédonicité (apprécier ou désapprouver)",
+        "en": "Hedonicity (like or dislike)"
+      },
+      "description": {
+        "fr": "Notez en fonction de votre perception sur l'hédonisme de tres desagreable a tres agreable. (4) pour Neutre",
+        "en": "Rate according to your perceived Hedonicity from 'Very Unpleasant' (1) to ‘Very Pleasing’ (7). Neutral is (4)."
+      },
+    },
+    {
+      "name": "page3",
+      "elements": [{
+          "type": "panel",
+          "name": "panel1",
+          "elements": [{
+              "type": "image",
+              "name": "question4",
+              "visibleIf": "{question1} = 'item1'",
+              "imageLink": "a.png"
+            },
+            {
+              "type": "image",
+              "name": "question4",
+              "visibleIf": "{question1} = 'item2'",
+              "imageLink": "b.png"
+            },
+            {
+              "type": "image",
+              "name": "question4",
+              "visibleIf": "{question1} = 'item3'",
+              "imageLink": "c.png"
+            }
+          ],
+          "title": {
+            "fr": "Your selected odour is - French translation required",
+            "en": "Your selected odour is",
+          },
+        },
+        {
+          "type": "rating",
+          "name": "Intensité / Intensity",
+          "minWidth": "825px",
+          "titleLocation": "hidden",
+          "isRequired": true,
+          "rateMax": 7,
+          "minRateDescription": {
+            "fr": "l’Odeur de ‘Pas d’odeur’",
+            "en": "No smell"
+          },
+          "maxRateDescription": {
+          "fr":"à ‘odeur très forte’",
+          "en":"Strong smell",
+          },
+        }
+      ],
+      "title": {
+        "fr":"Intensité",
+        "en":"Intensity"
+      },
+      "description": {
+        "fr":"Notez en fonction de l'intensité de l’Odeur de ‘Pas d’odeur’ (1) à ‘odeur très forte’ (7). (4) pour Neutre.",
+        "en": "Rate according to the Odour intensity from No smell (1) to Smell is Very Strong (7). Neutral is (4)."
+      },
+    }
+  ],
+  showCompletedPage: 0
+}
 
-        var survey = new Survey.Model(surveyJSON);
-        $("#surveyContainer").Survey({
-          model: survey,
-          onComplete: submitData
-        });
+function submitData(survey) {
+  //send Ajax request to your web server.
+  // alert("The results are:" + JSON.stringify(survey.data));
+  window.location.href = "../ColourSelector/index.html";
+}
+
+var lang = localStorage.lang;
+console.log(lang);
+surveyJSON.locale = lang;
+
+var survey = new Survey.Model(surveyJSON);
+$("#surveyContainer").Survey({
+  model: survey,
+  onComplete: submitData
+});
+
+
+// Using jQuery (but could use pure JS with cross-browser event handlers):
+var idleSeconds = 20;
+
+
+// below timer copied from
+// https://stackoverflow.com/questions/7071472/javascript-timeout-when-no-actions-from-user-for-specified-time
+
+$(function(){
+  var idleTimer;
+  var warningTimer;
+  function resetTimer(){
+    clearTimeout(idleTimer);
+    clearTimeout(warningTimer);
+    idleTimer = setTimeout(whenUserIdle,idleSeconds*1000);
+    warningTimer = setTimeout(warnTimeout, (idleSeconds/2)*1000);
+  }
+
+  $(document.body).bind('mousemove keydown click',resetTimer); //space separated events list that we want to monitor
+  resetTimer(); // Start the timer when the page loads
+
+});
+
+function whenUserIdle(){
+  console.log("User idle, resetting");
+  {
+      window.location.href = "../index.html";
+  }
+}
+
+function warnTimeout(){
+    modal.style.display = "block";
+
+}
+
+// below modal code sourced from
+var modal = document.getElementById("myModal");
+
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  console.log(event.target);
+    modal.style.display = "none";
+}

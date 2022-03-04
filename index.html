@@ -1,12 +1,50 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <form action="/form/index.html">
-    <input type="submit" value="Begin" />
-</form>
-  </body>
+<html>
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap" rel="stylesheet">
+
+</head>
+<style media="screen">
+body {
+  padding: 0;
+  margin: 0;
+  background-color: black;
+ font-family: "Raleway", sans-serif;
+ font-size: 40px;
+ font-weight: 300;
+color: white;
+text-align: center;
+margin-top:10%;
+}
+
+button{
+  border-radius: 20px;
+  width: 200px;
+  font-size: 20px;
+  padding: 5px 5px 5px 5px;
+  margin: 5px 5px 5px 5px;
+}
+
+</style>
+<body>
+
+<h1>Draw Me an Odour</h1>
+
+<p>Choose a language below to begin</p>
+
+<button onclick="myFunction('fr')">French</button>
+<button onclick="myFunction('en')">English</button>
+
+<p id="demo"></p>
+
+<script>
+function myFunction(lang) {
+    localStorage.lang = lang;
+    window.location.href = "../introForm/index.html";
+}
+</script>
+
+</body>
 </html>

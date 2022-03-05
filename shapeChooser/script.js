@@ -15,55 +15,72 @@ let w;
 
 let c;
 
+let shapeOpacity = [255, 255, 255, 255];
+
 let storedDistance = 1000;
 
 function setup(){
 
 
-   canvas = createCanvas(windowWidth, windowHeight-55);
+   canvas = createCanvas(windowWidth, windowHeight-150);
     canvas.parent('sketch-holder');
-    background(0);
+
     noStroke();
     retrieveCol();
-    fill(c); // todo inherit
+
     let margin = 200;
     calcDimensions();
 
 
     //declare window
-    w = vMin*33.33;
+    w = vMin*40;
 
     // make 4 vectors
-    sV[0] = createVector(width*0.25, height*0.25, 20);
-    sV[1] = createVector(width*0.75, height*0.25, 4);
-    sV[2] = createVector(width*0.25, height*0.75, 3);
-    sV[3] = createVector(width*0.75, height*0.75, 6);
+    sV[0] = createVector(width*0.1, height*0.5, 20);
+    sV[1] = createVector(width*0.366, height*0.5, 4);
+    sV[2] = createVector(width*0.633, height*0.5, 3);
+    sV[3] = createVector(width*0.9, height*0.5, 6);
 
-    //draw an circle top left
-    ellipse(sV[0].x, sV[0].y, w, w);
-    //draw a rectangle top right
-    rectMode(RADIUS);
-    rect(sV[1].x, sV[1].y, w/2, w/2);
+    makeShapes();
+}
 
-    //draw a triangle bottom left
-    let curveQty = 3;
-    beginShape()
-    for (let i = 0; i < curveQty; i++) {
-    let angle = (((2 * PI) / curveQty) * i)+(1.5*PI);
-    let v = createVector((sV[2].x) + (w/2) * cos(angle), (sV[2].y) + (w/2) * sin(angle));
-    vertex(v.x, v.y)
-    }
-    endShape();
+function makeShapes(){
+    background(0);
+      c.setAlpha(shapeOpacity[0]);
+      fill(c);
+      //draw an circle top left
+      ellipse(sV[0].x, sV[0].y, w, w);
 
-    //draw a hexagon, bottom left
-    curveQty = 6;
-    beginShape()
-    for (let i = 0; i < curveQty; i++) {
+      //draw a rectangle top right
+      c.setAlpha(shapeOpacity[1]);
+      fill(c);
+      // fill(c); // todo inherit
+      rectMode(RADIUS);
+      rect(sV[1].x, sV[1].y, w/2, w/2);
+
+      //draw a triangle bottom left
+      c.setAlpha(shapeOpacity[2]);
+            fill(c);
+      let curveQty = 3;
+      beginShape()
+      for (let i = 0; i < curveQty; i++) {
       let angle = (((2 * PI) / curveQty) * i)+(1.5*PI);
-    let v = createVector((sV[3].x) + (w/2) * cos(angle), (sV[3].y) + (w/2) * sin(angle));
+      let v = createVector((sV[2].x) + (w/2) * cos(angle), (sV[2].y) + (w/2) * sin(angle));
       vertex(v.x, v.y)
-    }
-    endShape();
+      }
+      endShape();
+
+      //draw a hexagon, bottom left
+      c.setAlpha(shapeOpacity[3]);
+            fill(c);
+      curveQty = 6;
+      beginShape()
+      for (let i = 0; i < curveQty; i++) {
+        let angle = (((2 * PI) / curveQty) * i)+(1.5*PI);
+      let v = createVector((sV[3].x) + (w/2) * cos(angle), (sV[3].y) + (w/2) * sin(angle));
+        vertex(v.x, v.y)
+      }
+      endShape();
 
 }
 
@@ -71,7 +88,7 @@ function retrieveCol(){
   let importColour = localStorage.chosenColour;
   let chosenColour = importColour.split(",");
   var cccc = chosenColour.map(String);
-  c = color(parseInt(chosenColour[0]), parseInt(chosenColour[1]), parseInt(chosenColour[2]));
+  c = color(parseInt(chosenColour[0]), parseInt(chosenColour[1]), parseInt(chosenColour[2]), 255);
 }
 
 function touchStarted(){
@@ -83,13 +100,14 @@ function touchMoved(){
 }
 
 function check(){
-
-  console.log("checking");
   for (let i = 0; i < sV.length; i++){
     if (dist(mouseX, mouseY, sV[i].x, sV[i].y) < w){
-      console.log("thats a hit");
         localStorage.chosenVertice = sV[i].z;
-        window.location.href = "../Blob-slider/index.html";
+        shapeOpacity = [100, 100, 100, 100];
+        shapeOpacity[i] = 255;
+        makeShapes();
+
+  document.getElementById('next').classList.remove('hidden');
     }
   }
 }
@@ -105,4 +123,14 @@ function calcDimensions() {
     vMax = height / 100;
     vMin = width / 100;
   }
+}
+
+function goBack(){
+console.log("Going Backwards");
+window.location.href = "../ColourSelector/index.html";
+}
+
+function next(){
+console.log("Going Forwards");
+        window.location.href = "../Blob-slider/index.html";
 }

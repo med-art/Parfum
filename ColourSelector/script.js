@@ -1,4 +1,5 @@
 let squareSwatch, chosenSwatch;
+let buttonBool = 1;
 
 
     var array1 = [
@@ -13,7 +14,7 @@ let squareSwatch, chosenSwatch;
         ["#5f0618", "#5f154a", "#511e60", "#2c1d5e", "#221d5d", "#1d2d5e", "#135760", "#106047", "#1c6132", "#3b612e", "#5c5f2a", "#5f3914", "#60130d", "#000000"]
     ];
     function setup() {
-        var canvas = createCanvas(windowWidth, windowHeight-50);
+        var canvas = createCanvas(windowWidth, windowHeight);
           canvas.parent('sketch-holder');
         squareSwatch = createGraphics(width, height);
         chosenSwatch = createGraphics(width, height);
@@ -27,14 +28,15 @@ let squareSwatch, chosenSwatch;
 
     function draw() {
 
+        let adjustHeight = height*0.85;
         var rowCount = 9;
         var colCount = 14;
         for (var i = 0; i < rowCount; i++) {
             for (var j = 0; j < colCount; j++) {
                 var x = ((width / colCount) * j);
-                var y = ((height/ rowCount) * i)
-                var w = (width / colCount);
-                var h = (height / rowCount);
+                var y = ((adjustHeight/ rowCount) * i);
+                var w = (width/ colCount);
+                var h = (adjustHeight / rowCount);
                 var colourtemp = array1[i][j];
                 squareSwatch.fill(colourtemp);
                 squareSwatch.rect(x, y, w + 1, h + 1);
@@ -47,22 +49,29 @@ let squareSwatch, chosenSwatch;
             var c = get(mouseX, mouseY);
             chosenSwatch.fill(c);
             localStorage.chosenColour = c;
-            chosenSwatch.rect(0, 0, windowWidth, windowHeight);
+            chosenSwatch.rect(0, height*0.85, windowWidth, height);
             renderBig();
         }
 
 
     }
 
+function mousePressed(){
+if (buttonBool){
+  document.getElementById('next').classList.remove('hidden');
+  document.getElementById('header').remove();
+}
+}
+
 function render(){
-  background(0);
+  // background(0);
   image(squareSwatch, 0, 0, width, height);
 }
 function renderBig(){
   image(chosenSwatch, 0, 0, width, height);
 }
 
-function mouseReleased(){
+function proceed(){
   window.location.href = "../shapeChooser/index.html";
 
 }

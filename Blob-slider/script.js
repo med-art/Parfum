@@ -19,9 +19,17 @@ let vt;
 
 let storedDistance = 1000;
 
-function setup(){
-  createCanvas(windowWidth, windowHeight);
+let shapeLayer, tintLayer;
+let texture;
 
+function setup(){
+  canvas = createCanvas(windowWidth, windowHeight-70);
+      canvas.parent('sketch-holder');
+  texture = loadImage('assets/texture.jpg');
+  shapeLayer = createGraphics(width, height);
+  tintLayer = createGraphics(width, height);
+  tintLayer.tint(255, 255, 255,10);
+  shapeLayer.noStroke();
   background(0);
   noStroke();
   fill(215, 140, 255); // todo inherit
@@ -152,6 +160,10 @@ function interpolate() {
 
   }
   render();
+
+  if (sliderQty != shape.length) {
+    interpolate(); // run again if it does not match
+  }
 }
 
 function touchStarted() {
@@ -240,26 +252,44 @@ undoButton.remove();
 }
 
 function render() {
-  background(0);
-  fill(c);
+  //shapeLayer.background(0);
+  shapeLayer.clear();
+  tintLayer.clear();
+  shapeLayer.fill(c); //todo - move
     //combine via separate layers?
-  beginShape();
+  shapeLayer.beginShape();
   if (smooth) {
-    curveVertex(shape[shape.length - 2].x, shape[shape.length - 2].y);
-    curveVertex(shape[shape.length - 1].x, shape[shape.length - 1].y);
+    shapeLayer.curveVertex(shape[0].x, shape[0].y);
+    // shapeLayer.curveVertex(shape[1].x, shape[1].y);
   }
   for (i = 0; i < shape.length; i++) {
     if (smooth) {
-      curveVertex(shape[i].x, shape[i].y);
+        shapeLayer.curveVertex(shape[i].x, shape[i].y);
     } else {
-      vertex(shape[i].x, shape[i].y);
+        shapeLayer.vertex(shape[i].x, shape[i].y);
     }
   }
   if (smooth) {
-    curveVertex(shape[0].x, shape[0].y);
-    curveVertex(shape[1].x, shape[1].y);
+    // shapeLayer.curveVertex(shape[shape.length - 2].x, shape[shape.length - 2].y);
+    // shapeLayer.curveVertex(shape[shape.length - 1].x, shape[shape.length - 1].y);
+    shapeLayer.curveVertex(shape[0].x, shape[0].y);
+      shapeLayer.curveVertex(shape[1].x, shape[1].y);
+  // shapeLayer.curveVertex(shape[2].x, shape[2].y);
   }
-  endShape(CLOSE);
+    shapeLayer.endShape();
+
+    background(20);
+    // image(texture, 0, 0, width, height);
+    tintLayer.image(shapeLayer, 0, 0, width, height);
+    image(tintLayer, -20, 20, width*1.04, height*1.04);
+    image(tintLayer, -15, 15, width*1.03, height*1.03);
+    image(tintLayer, -10, 10, width*1.02, height*1.02);
+    image(tintLayer, -5, 5, width*1.01, height*1.01);
+    noTint();
+    image(shapeLayer, 0, 0, width, height);
+
+
+
   fill(255);
   for (i = 0; i < shape.length; i++) {
     ellipse(shape[i].x, shape[i].y, 6, 6);
@@ -267,4 +297,12 @@ function render() {
     // text(i, shape[i].x, shape[i].y, 100, 100);
   }
   image(sliderImg, 0, 0, width, height);
+}
+
+function goBack(){
+window.location.href = "../shapeChooser/index.html";
+}
+
+function next(){
+window.location.href = "../endGame/index.html";
 }

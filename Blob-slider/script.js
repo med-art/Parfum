@@ -185,7 +185,9 @@ function mouseDragged() {
       shape[chosen].x = mouseX;
       shape[chosen].y = mouseY;
       // TODO: Run a check
+      if (undoActive){
       removeButton();
+    }
     }
   } else {
 

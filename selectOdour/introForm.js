@@ -85,7 +85,7 @@ var surveyJSON = {
         "imageWidth": 100
       }],
       "title": {
-        "fr": "Odour Selection - French translation required",
+        "fr": "Odour Sélectionnez",
         "en": "Odour Selection"
       },
       "description": {
@@ -151,6 +151,63 @@ var surveyJSON = {
     },
     {
       "name": "page3",
+      "elements": [{
+          "type": "panel",
+          "name": "panel1",
+          "elements": [{
+              "type": "image",
+              "name": "question4",
+              "visibleIf": "{question1} = 'item1'",
+              "imageLink": "a.png"
+            },
+            {
+              "type": "image",
+              "name": "question4",
+              "visibleIf": "{question1} = 'item2'",
+              "imageLink": "b.png"
+            },
+            {
+              "type": "image",
+              "name": "question4",
+              "visibleIf": "{question1} = 'item3'",
+              "imageLink": "c.png"
+            }
+          ],
+          "title": {
+            "fr": "Your selected odour is - French translation required",
+            "en": "Your selected odour is",
+          },
+        },
+        {
+          "type": "rating",
+          "name": "Familiarity",
+          "minWidth": "825px",
+
+          "titleLocation": "hidden",
+          "isRequired": true,
+          "rateMax": 7,
+          "minRateDescription": {
+            "fr": "Jamais senti",
+            "en": "Never Smelt"
+          },
+          "maxRateDescription": {
+            "fr": "Peut identifier",
+            "en": "Can identify"
+          },
+        }
+      ],
+      "title": {
+        "fr": "Familiarité",
+        "en": "Familiarity"
+
+      },
+      "description": {
+        "fr": "Notez en fonction de votre perception sur la familiarité sur l’Odeur de ‘Jamais senti’(1) a ‘Identification définitive de cette odeur’(7). (4) pour Neutre",
+        "en": "Rate according to your familiarity with the Odour from Never smelt (1) to Definite identification of this smell (7). Neutral is (4)."
+      },
+    },
+    {
+      "name": "page4",
       "elements": [{
           "type": "panel",
           "name": "panel1",

@@ -81,7 +81,7 @@ var surveyJSON = {
         "choices": [{
             "value": "item1",
             "text": {
-              "fr": "Under 18 - French translation needed",
+              "fr": "Moins de 18 ans",
               "en": "Under 18"
             },
           },
@@ -214,7 +214,7 @@ var surveyJSON = {
           {
             "value": "item8",
             "text": {
-              "fr":"Prefer not to say",
+              "fr":"Je ne souhaite pas le préciser",
               "en":"Prefer not to say"
             },
           }

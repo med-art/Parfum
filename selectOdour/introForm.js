@@ -247,17 +247,17 @@ var surveyJSON = {
             "en": "No smell"
           },
           "maxRateDescription": {
-          "fr":"à ‘odeur très forte’",
-          "en":"Strong smell",
+            "fr": "à ‘odeur très forte’",
+            "en": "Strong smell",
           },
         }
       ],
       "title": {
-        "fr":"Intensité",
-        "en":"Intensity"
+        "fr": "Intensité",
+        "en": "Intensity"
       },
       "description": {
-        "fr":"Notez en fonction de l'intensité de l’Odeur de ‘Pas d’odeur’ (1) à ‘odeur très forte’ (7). (4) pour Neutre.",
+        "fr": "Notez en fonction de l'intensité de l’Odeur de ‘Pas d’odeur’ (1) à ‘odeur très forte’ (7). (4) pour Neutre.",
         "en": "Rate according to the Odour intensity from No smell (1) to Smell is Very Strong (7). Neutral is (4)."
       },
     }
@@ -289,30 +289,30 @@ var idleSeconds = 20;
 // below timer copied from
 // https://stackoverflow.com/questions/7071472/javascript-timeout-when-no-actions-from-user-for-specified-time
 
-$(function(){
+$(function() {
   var idleTimer;
   var warningTimer;
-  function resetTimer(){
+
+  function resetTimer() {
     clearTimeout(idleTimer);
     clearTimeout(warningTimer);
-    idleTimer = setTimeout(whenUserIdle,idleSeconds*1000);
-    warningTimer = setTimeout(warnTimeout, (idleSeconds/2)*1000);
+    idleTimer = setTimeout(whenUserIdle, idleSeconds * 1000);
+    warningTimer = setTimeout(warnTimeout, (idleSeconds / 2) * 1000);
   }
 
-  $(document.body).bind('mousemove keydown click',resetTimer); //space separated events list that we want to monitor
+  $(document.body).bind('mousemove keydown click', resetTimer); //space separated events list that we want to monitor
   resetTimer(); // Start the timer when the page loads
 
 });
 
-function whenUserIdle(){
-  console.log("User idle, resetting");
-  {
-      window.location.href = "../index.html";
+function whenUserIdle() {
+  console.log("User idle, resetting"); {
+    window.location.href = "../index.html";
   }
 }
 
-function warnTimeout(){
-    modal.style.display = "block";
+function warnTimeout() {
+  modal.style.display = "block";
 
 }
 
@@ -323,5 +323,5 @@ var modal = document.getElementById("myModal");
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   console.log(event.target);
-    modal.style.display = "none";
+  modal.style.display = "none";
 }

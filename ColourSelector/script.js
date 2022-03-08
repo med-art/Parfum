@@ -1,5 +1,6 @@
 let squareSwatch, chosenSwatch;
 let buttonBool = 1;
+let headerActive = 1;
 
 
     var array1 = [
@@ -23,10 +24,11 @@ let buttonBool = 1;
         chosenSwatch.colorMode(RGB);
         squareSwatch.noStroke();
         chosenSwatch.noStroke();
+        makeSquares();
         render();
     }
 
-    function draw() {
+    function makeSquares() {
 
         let adjustHeight = height*0.85;
         var rowCount = 9;
@@ -44,40 +46,47 @@ let buttonBool = 1;
         }
 
           render();
+}
+
+    function touchMoved(){
+
+if (headerActive){
+  document.getElementById('header').remove();
+  headerActive = 0;
+}
 
         if (mouseIsPressed && (mouseY > 0) && (mouseY < windowHeight) && (mouseX > 0) && (mouseX < windowWidth)) {
-            var c = get(mouseX, mouseY);
+            var c = squareSwatch.get(mouseX, mouseY);
             chosenSwatch.fill(c);
             localStorage.chosenColour = c;
-            chosenSwatch.rect(0, height*0.85, windowWidth, height);
+            chosenSwatch.rect(0, 0, width, height);
             renderBig();
         }
+}
 
-
-    }
-
-function mousePressed(){
+function mouseReleased(){
 if (buttonBool){
-  document.getElementById('next').classList.remove('hidden');
-  document.getElementById('header').remove();
+  document.getElementById('promptBox').classList.remove('hidden');
+
+
 }
 }
 
 function render(){
-  // background(0);
+
+  background(0);
   image(squareSwatch, 0, 0, width, height);
 }
 function renderBig(){
   image(chosenSwatch, 0, 0, width, height);
 }
 
+function goBack(){
+  document.getElementById('promptBox').classList.add('hidden');
+  render();
+}
+
 function proceed(){
   window.location.href = "../shapeChooser/index.html";
 
 }
-
-    //
-    // function windowResized() {
-    //     resizeCanvas(windowWidth / 2, windowHeight);
-    //     background(255);
-    // }

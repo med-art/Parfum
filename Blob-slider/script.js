@@ -278,7 +278,7 @@ function render() {
   }
     shapeLayer.endShape();
 
-    background(20);
+    background(0);
     // image(texture, 0, 0, width, height);
     tintLayer.image(shapeLayer, 0, 0, width, height);
     image(tintLayer, -20, 20, width*1.04, height*1.04);

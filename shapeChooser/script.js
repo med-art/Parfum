@@ -25,6 +25,14 @@ function setup(){
    canvas = createCanvas(windowWidth, windowHeight-150);
     canvas.parent('sketch-holder');
 
+    var lang = localStorage.lang;
+    console.log(lang);
+    if (lang = "fr"){
+    document.getElementById("header").innerHTML="Choisissez une forme qui correspond à l'odeur que vous sentez.";
+    } else {
+    document.getElementById("header").innerHTML="Please choose a shape that you think corresponds to the odour";
+    }
+
     noStroke();
     retrieveCol();
 

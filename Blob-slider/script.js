@@ -25,6 +25,17 @@ let texture;
 function setup(){
   canvas = createCanvas(windowWidth, windowHeight-70);
       canvas.parent('sketch-holder');
+
+
+      var lang = localStorage.lang;
+      console.log(lang);
+      if (lang = "fr"){
+      document.getElementById("header").innerHTML="Si vous le souhaitez, adaptez la forme qui correspond le plus à la couleur. Pour cela, vous pouvez toucher les points et utiliser le curseur sur la gauche pour ajouter ou enlever des détails.";
+      } else {
+      document.getElementById("header").innerHTML="If you want to adapt the shape to correspond more to the odour move the white points around. <br> Use the slider on the left to add or remove points";
+      }
+
+
   texture = loadImage('assets/texture.jpg');
   shapeLayer = createGraphics(width, height);
   tintLayer = createGraphics(width, height);

@@ -89,7 +89,7 @@ var surveyJSON = {
         "en": "Odour Selection"
       },
       "description": {
-        "fr": "French translation required",
+        "fr": "Choisissez une odeur parmi s 'A', 'B', 'C' et attrapez le dispositif correspondant.",
         "en": "Please select any of the odours labelled with the letter 'A', 'B' or 'C', and choose the corresponding letter below."
       }
     },
@@ -118,8 +118,8 @@ var surveyJSON = {
             }
           ],
           "title": {
-            "fr": "Your selected odour is - French translation required",
-            "en": "Your selected odour is",
+            "fr": "L'odeur sélectionnée est:",
+            "en": "Your selected odour is:",
           },
         },
         {
@@ -174,8 +174,8 @@ var surveyJSON = {
             }
           ],
           "title": {
-            "fr": "Your selected odour is - French translation required",
-            "en": "Your selected odour is",
+            "fr": "L'odeur sélectionnée est:",
+            "en": "Your selected odour is:",
           },
         },
         {
@@ -231,8 +231,8 @@ var surveyJSON = {
             }
           ],
           "title": {
-            "fr": "Your selected odour is - French translation required",
-            "en": "Your selected odour is",
+            "fr": "L'odeur sélectionnée est:",
+            "en": "Your selected odour is:",
           },
         },
         {
@@ -283,7 +283,7 @@ $("#surveyContainer").Survey({
 
 
 // Using jQuery (but could use pure JS with cross-browser event handlers):
-var idleSeconds = 20;
+var idleSeconds = 35;
 
 
 // below timer copied from

@@ -18,10 +18,6 @@
             z-index: -10;
         }
 
-        .hidden{
-          visibility: hidden;
-        }
-
         button{
           position: absolute;
             -webkit-appearance: none;
@@ -69,21 +65,14 @@
 
           }
 
-        h2{
-          text-align: center;
-          position: absolute;
-          top: 90%;
-          left: 50%;
-          -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-        }
+
 
         body{
           background-color: 0;
          font-family: "Roboto", sans-serif;
          font-weight: 100;
                    color: white;
-                      text-align: right;
+
 
         }
 
@@ -102,9 +91,44 @@
         }
 
 
+        .titleBox{
+          width: 100%;
+          height: 15vh;
+        }
+        h2{
+          width: 80vw;
+          text-align: left;
+          position: relative;
+          top: 20%;
+          left: 20vw;
+          /* -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%); */
+        }
+
+        .alpha{
+          /* text-align: left; */
+          position: absolute;
+          top: 2.5vh;
+          left:2.5vh;
+          /* -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%); */
+          height: 10vh;
+        }
 
         #sketch-holder{
           /* margin-top: 50px; */
+        }
+
+        .hidden{
+          visibility: hidden;
+          opacity: 0;
+          transition: opacity 1000ms;
+        }
+
+        .visible{
+          visibility: visible;
+          opacity: 1;
+          transition: opacity 2s 1.25s linear;
         }
 
     </style>
@@ -113,7 +137,10 @@
         <div class="fixed2" id="sketch-holder">
             <script language="javascript" type="text/javascript" src="script.js"></script>
         </div>
-        <h2 id="header">Please choose a colour that you think corresponds to the odour</h2>
+        <div class="titleBox visible" id="titleBox">
+            <h2 id="header">Please choose a colour that you think corresponds to the odour / Choisissez une couleur qui correspond à l'odeur que vous percevez.</h2>
+            <img class="alpha" src="../common/a.png" alt="A"></img>
+        </div>
         <div class="promptBox hidden" id="promptBox">
         <h3 id="prompt">Happy with this Colour?</h3>
         <button type="button" name="button" id="next" class="next" onclick="proceed()">Yes, continue</button>

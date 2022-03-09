@@ -59,11 +59,11 @@ Survey.StylesManager.applyTheme("modern");
 var surveyJSON = {
 
   "title": {
-    "fr": "French title missing",
+    "fr": "Avant de commencer, nous souhaiterions en savoir un peu plus sur vous",
     "en": "Before we begin, we want to know a little bit about you"
   },
   "description": {
-    "fr": "French description missing",
+    "fr": "Pouvez-vous répondre à ces 3 questions",
     "en": "Please answer the 3 following questions"
   },
   "logoPosition": "right",
@@ -143,7 +143,7 @@ var surveyJSON = {
           {
             "value": "item3",
             "text": {
-              "fr":"Gender Diverse - French translation required",
+              "fr":"Genre",
               "en":"Gender Diverse"
             },
           },
@@ -159,7 +159,7 @@ var surveyJSON = {
         "type": "dropdown",
         "name": "question4",
         "title": {
-          "fr":"What continent or region are you from? - French translation required",
+          "fr":"De quel continent venez-vous?",
           "en":"What continent or region are you from?"
         },
         "isRequired": true,
@@ -243,7 +243,7 @@ $("#surveyContainer").Survey({
 });
 
 // Using jQuery (but could use pure JS with cross-browser event handlers):
-var idleSeconds = 20;
+var idleSeconds = 35;
 
 
 

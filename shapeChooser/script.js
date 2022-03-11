@@ -15,6 +15,8 @@ let w;
 
 let c;
 
+let vertexQty;
+
 let shapeOpacity = [255, 255, 255, 255];
 
 let storedDistance = 1000;
@@ -27,7 +29,7 @@ function setup(){
 
     var lang = localStorage.lang;
     console.log(lang);
-    if (lang = "fr"){
+    if (lang == "fr"){
     document.getElementById("header").innerHTML="Choisissez une forme qui correspond à l'odeur que vous sentez.";
     } else {
     document.getElementById("header").innerHTML="Please choose a shape that you think corresponds to the odour";
@@ -110,7 +112,8 @@ function touchMoved(){
 function check(){
   for (let i = 0; i < sV.length; i++){
     if (dist(mouseX, mouseY, sV[i].x, sV[i].y) < w){
-        localStorage.chosenVertice = sV[i].z;
+      vertexQty = sV[i].z;
+        localStorage.chosenVertice = vertexQty;
         shapeOpacity = [100, 100, 100, 100];
         shapeOpacity[i] = 255;
         makeShapes();
@@ -140,5 +143,8 @@ window.location.href = "../ColourSelector/index.html";
 
 function next(){
 console.log("Going Forwards");
-        window.location.href = "../Blob-slider/index.html";
+let userId = localStorage.getItem("id");
+let sessionId = localStorage.getItem("sessionId");
+logShape(sessionId, userId, vertexQty);
+window.location.href = "../Blob-slider/index.html";
 }

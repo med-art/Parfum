@@ -1,6 +1,7 @@
 let squareSwatch, chosenSwatch;
 let buttonBool = 1;
 let disablePicking = 0;
+let c; // colour
 
 
 var array1 = [
@@ -23,7 +24,7 @@ function setup() {
 
   var lang = localStorage.lang;
   console.log(lang);
-  if (lang = "fr") {
+  if (lang == "fr") {
     document.getElementById("header").innerHTML = "Choisissez une couleur qui correspond à l'odeur que vous percevez.";
   } else {
     document.getElementById("header").innerHTML = "Please choose a colour that you think corresponds to the odour";
@@ -77,9 +78,8 @@ function mousePressed() {
 
 function selectColour() {
   if (mouseIsPressed && (mouseY > 0) && (mouseY < windowHeight) && (mouseX > 0) && (mouseX < windowWidth)) {
-    var c = squareSwatch.get(mouseX, mouseY);
+    c = squareSwatch.get(mouseX, mouseY);
     chosenSwatch.fill(c);
-    localStorage.chosenColour = c;
     chosenSwatch.rect(0, 0, width, height);
     renderBig();
   }
@@ -115,6 +115,10 @@ function goBack() {
 
 function proceed() {
   disablePicking = 1;
+  let userId = localStorage.getItem("id");
+  let sessionId = localStorage.getItem("sessionId");
+  logColour(sessionId, userId, c);
+  localStorage.chosenColour = c;
   window.location.href = "../shapeChooser/index.html";
 
 }

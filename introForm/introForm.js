@@ -79,34 +79,34 @@ var surveyJSON = {
         },
         "isRequired": true,
         "choices": [{
-            "value": "item1",
+            "value": "Under 18",
             "text": {
               "fr": "Moins de 18 ans",
               "en": "Under 18"
             },
           },
           {
-            "value": "item2",
+            "value": "18-30",
             "text": "18-30"
           },
           {
-            "value": "item3",
+            "value": "31-40",
             "text": "31-40"
           },
           {
-            "value": "item4",
+            "value": "41-55",
             "text": "41-55"
           },
           {
-            "value": "item5",
+            "value": "55-70",
             "text": "55-70"
           },
           {
-            "value": "item6",
+            "value": "70-85",
             "text": "70-85"
           },
           {
-            "value": "item7",
+            "value": "85+",
             "text": "85+"
           }
         ]
@@ -127,28 +127,28 @@ var surveyJSON = {
         },
         "isRequired": true,
         "choices": [{
-            "value": "item1",
+            "value": "Male",
             "text": {
               "fr": "Masculin",
               "en": "Male"
             }
           },
           {
-            "value": "item2",
+            "value": "Female",
             "text": {
               "fr":"Féminin",
               "en": "Female"
             },
           },
           {
-            "value": "item3",
+            "value": "Gender Diverse",
             "text": {
               "fr":"Genre",
               "en":"Gender Diverse"
             },
           },
           {
-            "value": "item4",
+            "value": "Opt out",
             "text": {
               "fr":"Je ne souhaite pas le préciser",
               "en":"I would prefer not to say"},
@@ -164,55 +164,56 @@ var surveyJSON = {
         },
         "isRequired": true,
         "choices": [{
-            "value": "item1",
+            "value": "Asia",
             "text": {
               "fr":"Asia",
               "en":"Asia"
             },
           },
           {
-            "value": "item2",
+            "value": "Africa",
             "text": {
               "fr":"Africa",
               "en":"Africa"
             },
           },
           {
+            "value": "North America",
             "text": {
               "fr":"North America",
               "en":"North America"
             },
           },
           {
-            "value": "item4",
+            "value": "South America",
             "text": {
               "fr":"South America",
               "en":"South America"
             },
           },
           {
-            "value": "item5",
+            "value": "Antarctica",
             "text": {
               "fr":"Antarctica",
               "en":"Antarctica"
             },
           },
           {
-            "value": "item6",
+            "value": "Europe",
             "text": {
               "fr":"Europe",
               "en":"Europe"
             },
           },
           {
-            "value": "item7",
+            "value": "Australia/Oceania",
             "text": {
               "fr":"Australia/Oceania",
               "en":"Australia/Oceania"
             },
           },
           {
-            "value": "item8",
+            "value": "Opt out",
             "text": {
               "fr":"Je ne souhaite pas le préciser",
               "en":"Prefer not to say"
@@ -229,7 +230,13 @@ var surveyJSON = {
 function submitData(survey) {
   //send Ajax request to your web server.
   // alert("The results are:" + JSON.stringify(survey.data));
+
+  var dat = survey.data;
+  var id = Date.now();
+  localStorage.setItem("id",id);
+  logGuest(id, dat.question1, dat.question3, dat.question4, lang); // note question 2 is a statement, and can be discarded
   window.location.href = "../selectOdour/index.html";
+
 }
 
 var lang = localStorage.lang;
@@ -242,12 +249,10 @@ $("#surveyContainer").Survey({
   onComplete: submitData
 });
 
+
+
 // Using jQuery (but could use pure JS with cross-browser event handlers):
 var idleSeconds = 35;
-
-
-
-
 // below timer copied from
 // https://stackoverflow.com/questions/7071472/javascript-timeout-when-no-actions-from-user-for-specified-time
 

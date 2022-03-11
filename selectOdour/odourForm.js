@@ -65,19 +65,19 @@ var surveyJSON = {
       "name": "page1",
       "elements": [{
         "type": "imagepicker",
-        "name": "question1",
+        "name": "SelectedOdour",
         "titleLocation": "hidden",
         "isRequired": true,
         "choices": [{
-            "value": "item1",
+            "value": "Odour A",
             "imageLink": "a.png"
           },
           {
-            "value": "item2",
+            "value": "Odour B",
             "imageLink": "b.png"
           },
           {
-            "value": "item3",
+            "value": "Odour C",
             "imageLink": "c.png"
           }
         ],
@@ -237,7 +237,7 @@ var surveyJSON = {
         },
         {
           "type": "rating",
-          "name": "Intensité / Intensity",
+          "name": "Intensity",
           "minWidth": "825px",
           "titleLocation": "hidden",
           "isRequired": true,
@@ -268,7 +268,17 @@ var surveyJSON = {
 function submitData(survey) {
   //send Ajax request to your web server.
   // alert("The results are:" + JSON.stringify(survey.data));
+
+  var dat = survey.data;
+  var formLogId = Date.now();
+ localStorage.setItem("sessionId", formLogId);
+  var userId = localStorage.getItem("id");
+  console.log(formLogId);
+  console.log(userId);
+  logResponse(formLogId, userId, dat.SelectedOdour, dat.Familiarity, dat.Hedonicity, dat.Intensity);
   window.location.href = "../ColourSelector/index.html";
+
+
 }
 
 var lang = localStorage.lang;

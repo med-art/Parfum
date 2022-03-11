@@ -29,7 +29,7 @@ function setup(){
 
       var lang = localStorage.lang;
       console.log(lang);
-      if (lang = "fr"){
+      if (lang == "fr"){
       document.getElementById("header").innerHTML="Si vous le souhaitez, adaptez la forme qui correspond le plus à la couleur. Pour cela, vous pouvez toucher les points et utiliser le curseur sur la gauche pour ajouter ou enlever des détails.";
       } else {
       document.getElementById("header").innerHTML="If you want to adapt the shape to correspond more to the odour move the white points around. <br> Use the slider on the left to add or remove points";
@@ -315,5 +315,19 @@ window.location.href = "../shapeChooser/index.html";
 }
 
 function next(){
+
+// make the array simpler for storage in firebasedatabase
+
+let vertices = [];
+
+for (let i = 0; i < shape.length; i++){
+  vertices[i] = [];
+  vertices[i][0] = shape[i].x;
+  vertices[i][1] = shape[i].y;
+}
+
+let userId = localStorage.getItem("id");
+let sessionId = localStorage.getItem("sessionId");
+logDrawing(sessionId, userId, vertices, width, height);
 window.location.href = "../endGame/index.html";
 }

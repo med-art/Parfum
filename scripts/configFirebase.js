@@ -18,8 +18,8 @@
   const db = app.database();
   const ref = db.ref();
   const guest = ref.child('guest');
-  // const response = ref.child('response'); // response list no longer in use.
-
+  const colourLog = ref.child('colourLog'); // response list no longer in use.
+  const drawingLog = ref.child('drawingLog');
 
   function logGuest(ident, a, g, r, l) {
     guest.child(ident).set({
@@ -52,16 +52,28 @@
   }
 
   function logColour(id, u, c) {
+
+    // log all the long form colour information, matched to userID
     guest.child(u).child(id).update({
         RGBACol: c,
-      })
+      }) //log to simple colour list, used to run the interactive projector
+      .then(colourLog.update({
+        RGBACol: c,
+      })) //confirm to console, move to next screen.
       .then(() => {
-        console.log("colour response data uploaded successfully")
+        console.log("form colour response data uploaded successfully")
+        window.location.href = "../shapeChooser/index.html";
       })
       .catch((error) => {
         console.error("Error writing colour document: ", error)
       });
+
+    //log to simple colour list, used to run the interactive projector
+
+
+
   }
+
 
 
   function logShape(id, u, s) {
@@ -69,6 +81,7 @@
         qtyOfShapeVertices: s,
       })
       .then(() => {
+        window.location.href = "../drawing/index.html";
         console.log("shape data uploaded successfully")
       })
       .catch((error) => {
@@ -76,17 +89,27 @@
       });
   }
 
-  function logDrawing(id, u, d, w, h) {
-    console.log(id, u, d, w, h);
+  function logDrawing(id, u, d, w, h, c, od) {
+    console.log(id, u, d, w, h, c);
     guest.child(u).child(id).update({
         drawingVertices: d,
         canvasWidth: w,
         canvasHeight: h
       })
+      .then(
+        drawingLog.child(od).child(id).update({
+          colour: c,
+          drawingVertices: d,
+          canvasWidth: w,
+          canvasHeight: h
+        })
+      )
       .then(() => {
         console.log("morphed shape vertices uploaded successfully")
+       window.location.href = "../endGame/index.html";
       })
       .catch((error) => {
         console.error("Error writing shape vertex document: ", error)
       });
+    // this is a separate log, to be used just to access the projector
   }

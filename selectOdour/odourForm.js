@@ -69,15 +69,15 @@ var surveyJSON = {
         "titleLocation": "hidden",
         "isRequired": true,
         "choices": [{
-            "value": "Odour A",
+            "value": "A",
             "imageLink": "a.png"
           },
           {
-            "value": "Odour B",
+            "value": "B",
             "imageLink": "b.png"
           },
           {
-            "value": "Odour C",
+            "value": "C",
             "imageLink": "c.png"
           }
         ],
@@ -270,11 +270,11 @@ function submitData(survey) {
   // alert("The results are:" + JSON.stringify(survey.data));
 
   var dat = survey.data;
+  localStorage.setItem("selectedOdour", dat.SelectedOdour);
+  console.log(dat.SelectedOdour);
   var formLogId = Date.now();
- localStorage.setItem("sessionId", formLogId);
+  localStorage.setItem("sessionId", formLogId);
   var userId = localStorage.getItem("id");
-  console.log(formLogId);
-  console.log(userId);
   logResponse(formLogId, userId, dat.SelectedOdour, dat.Familiarity, dat.Hedonicity, dat.Intensity);
   window.location.href = "../ColourSelector/index.html";
 

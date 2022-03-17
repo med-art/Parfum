@@ -316,18 +316,69 @@ window.location.href = "../shapeChooser/index.html";
 
 function next(){
 
+
+
 // make the array simpler for storage in firebasedatabase
 
 let vertices = [];
 
+// search through the shape to find the longest X and Y extents, as well as the shortest X and Y extentds
+let maxX = 0;
+let maxY = 0;
+let minX = 10000000;
+let minY = 10000000;
 for (let i = 0; i < shape.length; i++){
+  if (shape[i].x > maxX){
+    maxX = shape[i].x
+  }
+  if (shape[i].y > maxY){
+    maxY = shape[i].y
+  }
+  if (shape[i].x < minX){
+    minX = shape[i].x
+  }
+  if (shape[i].y < minY){
+    minY = shape[i].y
+  }
+}
+
+// find the relative lengths
+let xLength = maxX-minX;
+let yLength = maxY-minY;
+
+// find the longest lenght, then use that to create a margin each side of the shortest length, in order to later (during save)
+// (cont) force the whole canvas to be square
+let marginX = 0;
+let marginY = 0;
+if (xLength >= yLength){
+  marginY = (xLength - yLength) / 2;
+} else {
+  marginX = (yLength - xLength) / 2;
+}
+
+//rebuild lengths to include margins (x2)
+xLength += (marginX*2);
+yLength += (marginY*2);
+
+// now process the items to save, but making square using the following algorithm
+// take the original data, subtract the min value (x or y, to bring the origin back to 0), and then add a the margin (in X or Y)
+// TODO, do we want to homogenise these to a 1000x1000 grid??
+
+for (let i = 0; i < shape.length; i++){
+
+  let _x = Math.round(((shape[i].x - minX + marginX)/xLength)*1000);
+  let _y = Math.round(((shape[i].y - minY + marginY)/yLength)*1000);
+
+  // now store those in a clean array;
   vertices[i] = [];
-  vertices[i][0] = shape[i].x;
-  vertices[i][1] = shape[i].y;
+  vertices[i][0] = _x;
+  vertices[i][1] = _y;
+
 }
 
 let userId = localStorage.getItem("id");
 let sessionId = localStorage.getItem("sessionId");
-logDrawing(sessionId, userId, vertices, width, height);
-window.location.href = "../endGame/index.html";
+let odour = localStorage.getItem("selectedOdour")
+logDrawing(sessionId, userId, vertices, 1000, 1000, c, odour);
+
 }

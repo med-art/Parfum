@@ -1,0 +1,87 @@
+var vertexData; // may want to remove this as a global
+let lastKey; // remove from global?
+let colour;
+let smooth = 0;
+
+let shape = [];
+let shapeLayer;
+
+// Colour info
+var colourRef = firebase.database().ref('colourLog'); // note, data is seperate RGBA values if ref = colourLog/RGBACol
+// guestRef.on('value', (snapshot) => { // gets all data, including old
+// guestRef.on('child_added', (snapshot, prevChildKey) => { // gets changed (added)
+colourRef.on('child_changed', (snapshot) => {
+  const data = snapshot.val();
+  console.log(data);
+  background(data);
+});
+
+// shape vertex info
+var vertexRef = firebase.database().ref('drawingLog'); // note, data is seperate RGBA values if ref = colourLog/RGBACol
+// guestRef.on('value', (snapshot) => { // gets all data, including old
+// guestRef.on('child_added', (snapshot, prevChildKey) => { // gets changed (added)
+vertexRef.on('child_changed', (snapshot) => {
+  vertexData = snapshot.val();
+  console.log(vertexData);
+  // retrieve the qty of keys in the data
+  let len = Object.keys(vertexData).length;
+  // get the latest key (the most recent drawing)
+  lastKey = Object.keys(vertexData)[len - 1]
+
+  // get the colourRef
+  colour = vertexData[lastKey].colour;
+
+
+  // get the smoothness / / TODO
+
+  // get the vertices
+  let vertexObject = vertexData[lastKey].drawingVertices;
+  // query the qty of vertices
+  let len2 = vertexObject.length;
+  //retreive all vertices for a single shape, and make p5.js vectors
+  shape = [];
+  for (let i = 0; i < len2; i++) {
+    let xy = vertexObject[i];
+    let v = createVector(xy[0], xy[1]);
+    shape.push(v);
+  }
+
+ recreateSingleShape();
+ rectreateAllShapes();
+
+});
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  shapeLayer = createGraphics(width, height);
+}
+
+function recreateSingleShape() {
+  shapeLayer.background(0);
+  shapeLayer.clear();
+  shapeLayer.fill(colour.levels[0], colour.levels[1], colour.levels[2]);
+  //combine via separate layers?
+  shapeLayer.beginShape();
+  if (smooth) {
+    shapeLayer.curveVertex(shape[0].x, shape[0].y);
+    // shapeLayer.curveVertex(shape[1].x, shape[1].y);
+  }
+  for (i = 0; i < shape.length; i++) {
+    if (smooth) {
+      shapeLayer.curveVertex(shape[i].x, shape[i].y);
+    } else {
+      shapeLayer.vertex(shape[i].x, shape[i].y);
+    }
+  }
+  if (smooth) {
+    shapeLayer.curveVertex(shape[0].x, shape[0].y);
+    shapeLayer.curveVertex(shape[1].x, shape[1].y);
+  }
+  shapeLayer.endShape();
+
+  background(0);
+  image(shapeLayer,0,0, width, height);
+
+
+
+}

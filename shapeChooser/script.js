@@ -146,5 +146,5 @@ console.log("Going Forwards");
 let userId = localStorage.getItem("id");
 let sessionId = localStorage.getItem("sessionId");
 logShape(sessionId, userId, vertexQty);
-window.location.href = "../Blob-slider/index.html";
+// window.location.href = "../Blob-slider/index.html"; // moved to firebaseConfig, to avoid async issues
 }

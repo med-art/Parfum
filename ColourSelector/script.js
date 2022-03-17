@@ -20,8 +20,18 @@ function setup() {
   var canvas = createCanvas(windowWidth, windowHeight);
 
 
+// get the selected Odour from localStorage, then change the top left hand image to appropriate figure
+  let selOd = localStorage.getItem("selectedOdour");
+  console.log("odour is " + selOd)
+  if (selOd == "A"){
+  document.getElementById("odourImg").src="../common/a.png";
+} else if (selOd == "B"){
+  document.getElementById("odourImg").src="../common/b.png";
+} else {
+  document.getElementById("odourImg").src="../common/c.png";
+}
 
-
+// get the language from localStorage, then set the header to appropriate language
   var lang = localStorage.lang;
   console.log(lang);
   if (lang == "fr") {
@@ -117,8 +127,7 @@ function proceed() {
   disablePicking = 1;
   let userId = localStorage.getItem("id");
   let sessionId = localStorage.getItem("sessionId");
-  logColour(sessionId, userId, c);
   localStorage.chosenColour = c;
-  window.location.href = "../shapeChooser/index.html";
-
+  logColour(sessionId, userId, c);
+  // window.location.href = "../shapeChooser/index.html"; // moved to firebase promise chain under logColour to avoid async issues.
 }

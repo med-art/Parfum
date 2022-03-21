@@ -16,40 +16,45 @@ let undoActive = 0;
 let sV = [];
 let c;
 let vt;
+let cV;
 
 let storedDistance = 1000;
 
 let shapeLayer, tintLayer;
-let texture;
-
-function setup(){
-  canvas = createCanvas(windowWidth, windowHeight-70);
-      canvas.parent('sketch-holder');
 
 
-      var lang = localStorage.lang;
-      console.log(lang);
-      if (lang == "fr"){
-      document.getElementById("header").innerHTML="Si vous le souhaitez, adaptez la forme qui correspond le plus à la couleur. Pour cela, vous pouvez toucher les points et utiliser le curseur sur la gauche pour ajouter ou enlever des détails.";
-      } else {
-      document.getElementById("header").innerHTML="If you want to adapt the shape to correspond more to the odour move the white points around. <br> Use the slider on the left to add or remove points";
-      }
+let centerX, centerY;
+
+function setup() {
+  canvas = createCanvas(windowWidth, windowHeight - 70);
+  canvas.parent('sketch-holder');
 
 
-  texture = loadImage('assets/texture.jpg');
+  var lang = localStorage.lang;
+  console.log(lang);
+  if (lang == "fr") {
+    document.getElementById("header").innerHTML = "Si vous le souhaitez, adaptez la forme qui correspond le plus à la couleur. Pour cela, vous pouvez toucher les points et utiliser le curseur sur la gauche pour ajouter ou enlever des détails.";
+  } else {
+    document.getElementById("header").innerHTML = "If you want to adapt the shape to correspond more to the odour move the white points around. <br> Use the slider on the left to add or remove points";
+  }
+
+
+
   shapeLayer = createGraphics(width, height);
+  shapeLayer.strokeWeight(1);
+
   tintLayer = createGraphics(width, height);
-  tintLayer.tint(255, 255, 255,10);
-  shapeLayer.noStroke();
-  background(0);
+  tintLayer.noStroke();
+tintLayer.fill(100, 10);
+
   noStroke();
-  fill(215, 140, 255); // todo inherit
   let margin = 200;
   calcDimensions();
 
-retrieveCol();
- setupDrawing();
+  retrieveCol();
+  setupDrawing();
 }
+
 
 function setupDrawing() {
 
@@ -57,7 +62,7 @@ function setupDrawing() {
   sliderIcon = loadImage('assets/slider.png');
   noStroke();
   // stroke(255);
-retrieveCol();
+  retrieveCol();
   fill(c);
 
 
@@ -73,17 +78,17 @@ retrieveCol();
 
 
   //change imported Vertex into slider position
-  let s = int(map(vt, 3, 30,  8 * hMax, height - (8 * hMax))); // tether with below constraint?
+  let s = int(map(vt, 3, 30, 8 * hMax, height - (8 * hMax))); // tether with below constraint?
   makeSlider(s);
 
   render();
 }
 
-function retrieveCol(){
+function retrieveCol() {
   let importColour = localStorage.chosenColour;
   let chosenColour = importColour.split(",");
   var cccc = chosenColour.map(String);
-  c = color(parseInt(chosenColour[0]), parseInt(chosenColour[1]), parseInt(chosenColour[2]));
+  c = color(parseInt(chosenColour[0]), parseInt(chosenColour[1]), parseInt(chosenColour[2]), 255);
 
   vt = localStorage.chosenVertice;
 
@@ -109,7 +114,7 @@ function makeSlider(mY) {
   // make an explicit constraint
 
   mY = constrain(mY, 8 * hMax, height - (8 * hMax));
-  sliderQty = 1+int(map(mY, 8 * hMax, height - (8 * hMax), 2, 30)); // tether with below constraint?
+  sliderQty = 1 + int(map(mY, 8 * hMax, height - (8 * hMax), 2, 30)); // tether with below constraint?
   sliderImg.clear();
   sliderImg.stroke(125);
   sliderImg.strokeWeight(7 * hMax);
@@ -121,7 +126,7 @@ function makeSlider(mY) {
   sliderImg.image(sliderIcon, 8 * hMax, mY, 8.5 * hMax, 8.5 * hMax);
   sliderImg.fill(244);
   sliderImg.noStroke();
-  sliderImg.text(sliderQty, 12*hMax, mY, 100, 100);
+  sliderImg.text(sliderQty, 12 * hMax, mY, 100, 100);
 
 
 }
@@ -208,18 +213,18 @@ function mouseDragged() {
       shape[chosen].x = mouseX;
       shape[chosen].y = mouseY;
       // TODO: Run a check
-      if (undoActive){
-      removeButton();
-    }
+      if (undoActive) {
+        removeButton();
+      }
     }
   } else {
 
 
     // if the button is not there, then create it. note use of explicit undoActive.
     // tried checking buttonMaker after deleted, but Boolean still came back positive.
-    if(!undoActive){
-    buttonMaker();
-  }
+    if (!undoActive) {
+      buttonMaker();
+    }
     makeSlider(mouseY);
   }
   if (!(sliderQty == shape.length)) {
@@ -233,7 +238,7 @@ function touchEnded() {
   sculptActive = 0;
 }
 
-function buttonMaker(){
+function buttonMaker() {
   // first make an archive of the current curve
   archivedShape = shape.slice();
   archivedSlider = sliderQty;
@@ -241,144 +246,203 @@ function buttonMaker(){
   // TODO: move to separate function for clarity?
   undoActive = 1;
   undoButton = createButton('undo');
-  undoButton.position(100,mouseY);
+  undoButton.position(100, mouseY);
   undoButton.mousePressed(undo);
 }
 
-function undo(){
+function undo() {
   removeButton();
   shape = archivedShape.slice();
 
   // // TODO: Search for identical syntax (replaced archivedSlider with vt) This is present above, needs to be refined
-  let s = int(map(archivedSlider, 3, 30,  8 * hMax, height - (8 * hMax))); // tether with below constraint?
+  let s = int(map(archivedSlider, 3, 30, 8 * hMax, height - (8 * hMax))); // tether with below constraint?
   makeSlider(s);
 
   console.log("archive retrieved")
   render();
 }
 
-function removeButton(){
-undoActive  = 0;
-undoButton.remove();
+function removeButton() {
+  undoActive = 0;
+  undoButton.remove();
+}
+
+function findCenter() {
+
+  let accumX = 0;
+  let accumY = 0;
+
+  for (let i = 0; i < shape.length; i++) {
+    accumX += shape[i].x;
+    accumY += shape[i].y;
+  }
+
+  centerX = accumX / shape.length;
+  centerY = accumY / shape.length;
+  cV = createVector(centerX, centerY);
+
+
+
+
 }
 
 function render() {
-  //shapeLayer.background(0);
+
+
+  findCenter();
+
   shapeLayer.clear();
   tintLayer.clear();
+  shapeLayer.stroke(200);
   shapeLayer.fill(c); //todo - move
-    //combine via separate layers?
+  //combine via separate layers?
+
+  // draw first layer
   shapeLayer.beginShape();
   if (smooth) {
     shapeLayer.curveVertex(shape[0].x, shape[0].y);
-    // shapeLayer.curveVertex(shape[1].x, shape[1].y);
   }
   for (i = 0; i < shape.length; i++) {
     if (smooth) {
-        shapeLayer.curveVertex(shape[i].x, shape[i].y);
+      shapeLayer.curveVertex(shape[i].x, shape[i].y);
     } else {
-        shapeLayer.vertex(shape[i].x, shape[i].y);
+      shapeLayer.vertex(shape[i].x, shape[i].y);
     }
   }
   if (smooth) {
-    // shapeLayer.curveVertex(shape[shape.length - 2].x, shape[shape.length - 2].y);
-    // shapeLayer.curveVertex(shape[shape.length - 1].x, shape[shape.length - 1].y);
     shapeLayer.curveVertex(shape[0].x, shape[0].y);
-      shapeLayer.curveVertex(shape[1].x, shape[1].y);
-  // shapeLayer.curveVertex(shape[2].x, shape[2].y);
+    shapeLayer.curveVertex(shape[1].x, shape[1].y);
+  } else {
+    shapeLayer.vertex(shape[0].x, shape[0].y);
   }
-    shapeLayer.endShape();
+  shapeLayer.endShape();
 
-    background(0);
-    // image(texture, 0, 0, width, height);
-    tintLayer.image(shapeLayer, 0, 0, width, height);
-    image(tintLayer, -20, 20, width*1.04, height*1.04);
-    image(tintLayer, -15, 15, width*1.03, height*1.03);
-    image(tintLayer, -10, 10, width*1.02, height*1.02);
-    image(tintLayer, -5, 5, width*1.01, height*1.01);
-    noTint();
-    image(shapeLayer, 0, 0, width, height);
+  //draw all other layers
+
+    // draw first layer
+    let _v;
+    let _d = 0.02;
+for (let k = 1; k < 20; k++){
+    tintLayer.beginShape();
+    if (smooth) {
+      _v = p5.Vector.lerp(cV, shape[0], 1+(k*_d));
+      tintLayer.curveVertex(_v.x, _v.y);
+    }
+    for (i = 0; i < shape.length; i++) {
+      if (smooth) {
+        _v = p5.Vector.lerp(cV, shape[i], 1+(k*_d));
+        tintLayer.curveVertex(_v.x, _v.y);
+      } else {
+        _v = p5.Vector.lerp(cV, shape[i], 1+(k*_d));
+        tintLayer.vertex(_v.x, _v.y);
+      }
+    }
+    if (smooth) {
+      _v = p5.Vector.lerp(cV, shape[0], 1+(k*_d));
+      tintLayer.curveVertex(_v.x, _v.y);
+      _v = p5.Vector.lerp(cV, shape[1], 1+(k*_d));
+      tintLayer.curveVertex(_v.x, _v.y);
+    } else {
+      _v = p5.Vector.lerp(cV, shape[0], 1+(k*_d));
+      tintLayer.vertex(_v.x, _v.y);
+    }
+    tintLayer.endShape();
+}
+
+
+
+
+  background(5);
+  image(tintLayer, 0, 0, width, height);
+  image(shapeLayer, 0, 0, width, height);
+
 
 
 
   fill(255);
   for (i = 0; i < shape.length; i++) {
-    ellipse(shape[i].x, shape[i].y, 6, 6);
+
+    ellipse(shape[i].x, shape[i].y, 9, 9);
+
     // DEBUGGING TOOL:
     // text(i, shape[i].x, shape[i].y, 100, 100);
   }
+
+
+
+
   image(sliderImg, 0, 0, width, height);
 }
 
-function goBack(){
-window.location.href = "../shapeChooser/index.html";
+function goBack() {
+  window.location.href = "../shapeChooser/index.html";
 }
 
-function next(){
+function next() {
 
 
 
-// make the array simpler for storage in firebasedatabase
+  // make the array simpler for storage in firebasedatabase
 
-let vertices = [];
+  let vertices = [];
 
-// search through the shape to find the longest X and Y extents, as well as the shortest X and Y extentds
-let maxX = 0;
-let maxY = 0;
-let minX = 10000000;
-let minY = 10000000;
-for (let i = 0; i < shape.length; i++){
-  if (shape[i].x > maxX){
-    maxX = shape[i].x
+  // search through the shape to find the longest X and Y extents, as well as the shortest X and Y extentds
+  let maxX = 0;
+  let maxY = 0;
+  let minX = 10000000;
+  let minY = 10000000;
+  for (let i = 0; i < shape.length; i++) {
+    if (shape[i].x > maxX) {
+      maxX = shape[i].x
+    }
+    if (shape[i].y > maxY) {
+      maxY = shape[i].y
+    }
+    if (shape[i].x < minX) {
+      minX = shape[i].x
+    }
+    if (shape[i].y < minY) {
+      minY = shape[i].y
+    }
   }
-  if (shape[i].y > maxY){
-    maxY = shape[i].y
+
+  // find the relative lengths
+  let xLength = maxX - minX;
+  let yLength = maxY - minY;
+
+  // find the longest lenght, then use that to create a margin each side of the shortest length, in order to later (during save)
+  // (cont) force the whole canvas to be square
+  let marginX = 0;
+  let marginY = 0;
+  if (xLength >= yLength) {
+    marginY = (xLength - yLength) / 2;
+  } else {
+    marginX = (yLength - xLength) / 2;
   }
-  if (shape[i].x < minX){
-    minX = shape[i].x
+
+  //rebuild lengths to include margins (x2)
+  xLength += (marginX * 2);
+  yLength += (marginY * 2);
+
+  // now process the items to save, but making square using the following algorithm
+  // take the original data, subtract the min value (x or y, to bring the origin back to 0), and then add a the margin (in X or Y)
+  // TODO, do we want to homogenise these to a 1000x1000 grid??
+
+  for (let i = 0; i < shape.length; i++) {
+
+    let _x = Math.round(((shape[i].x - minX + marginX) / xLength) * 1000);
+    let _y = Math.round(((shape[i].y - minY + marginY) / yLength) * 1000);
+
+    // now store those in a clean array;
+    vertices[i] = [];
+    vertices[i][0] = _x;
+    vertices[i][1] = _y;
+
   }
-  if (shape[i].y < minY){
-    minY = shape[i].y
-  }
-}
 
-// find the relative lengths
-let xLength = maxX-minX;
-let yLength = maxY-minY;
-
-// find the longest lenght, then use that to create a margin each side of the shortest length, in order to later (during save)
-// (cont) force the whole canvas to be square
-let marginX = 0;
-let marginY = 0;
-if (xLength >= yLength){
-  marginY = (xLength - yLength) / 2;
-} else {
-  marginX = (yLength - xLength) / 2;
-}
-
-//rebuild lengths to include margins (x2)
-xLength += (marginX*2);
-yLength += (marginY*2);
-
-// now process the items to save, but making square using the following algorithm
-// take the original data, subtract the min value (x or y, to bring the origin back to 0), and then add a the margin (in X or Y)
-// TODO, do we want to homogenise these to a 1000x1000 grid??
-
-for (let i = 0; i < shape.length; i++){
-
-  let _x = Math.round(((shape[i].x - minX + marginX)/xLength)*1000);
-  let _y = Math.round(((shape[i].y - minY + marginY)/yLength)*1000);
-
-  // now store those in a clean array;
-  vertices[i] = [];
-  vertices[i][0] = _x;
-  vertices[i][1] = _y;
-
-}
-
-let userId = localStorage.getItem("id");
-let sessionId = localStorage.getItem("sessionId");
-let odour = localStorage.getItem("selectedOdour")
-logDrawing(sessionId, userId, vertices, 1000, 1000, c, odour);
+  let userId = localStorage.getItem("id");
+  let sessionId = localStorage.getItem("sessionId");
+  let odour = localStorage.getItem("selectedOdour")
+  logDrawing(sessionId, userId, vertices, 1000, 1000, c, odour);
 
 }

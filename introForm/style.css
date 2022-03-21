@@ -1,6 +1,19 @@
 html{
   background-color: #111111;
+  height: 100%;
 }
+
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+height: 100%;
+}
+
+#surveyContainer{
+  width: 70%;
+}
+
 option{
   background-color:#D3D3D3;
 }

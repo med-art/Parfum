@@ -60,11 +60,11 @@ var surveyJSON = {
 
   "title": {
     "fr": "Avant de commencer, nous souhaiterions en savoir un peu plus sur vous",
-    "en": "Before we begin, we want to know a little bit about you"
+    "en": "Tell us a little bit about you"
   },
   "description": {
-    "fr": "Pouvez-vous répondre à ces 3 questions",
-    "en": "Please answer the 3 following questions"
+    // "fr": "Pouvez-vous répondre à ces 3 questions",
+    // "en": "Please answer the 3 following questions"
   },
   "logoPosition": "right",
   "locale": "fr",

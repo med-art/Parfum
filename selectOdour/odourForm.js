@@ -101,19 +101,19 @@ var surveyJSON = {
           "elements": [{
               "type": "image",
               "name": "question4",
-              "visibleIf": "{question1} = 'item1'",
+              "visibleIf": "{SelectedOdour} = 'A'",
               "imageLink": "a.png"
             },
             {
               "type": "image",
               "name": "question4",
-              "visibleIf": "{question1} = 'item2'",
+              "visibleIf": "{SelectedOdour} = 'B'",
               "imageLink": "b.png"
             },
             {
               "type": "image",
               "name": "question4",
-              "visibleIf": "{question1} = 'item3'",
+              "visibleIf": "{SelectedOdour} = 'C'",
               "imageLink": "c.png"
             }
           ],
@@ -157,19 +157,19 @@ var surveyJSON = {
           "elements": [{
               "type": "image",
               "name": "question4",
-              "visibleIf": "{question1} = 'item1'",
+              "visibleIf": "{SelectedOdour} = 'A'",
               "imageLink": "a.png"
             },
             {
               "type": "image",
               "name": "question4",
-              "visibleIf": "{question1} = 'item2'",
+              "visibleIf": "{SelectedOdour} = 'B'",
               "imageLink": "b.png"
             },
             {
               "type": "image",
               "name": "question4",
-              "visibleIf": "{question1} = 'item3'",
+              "visibleIf": "{SelectedOdour} = 'C'",
               "imageLink": "c.png"
             }
           ],
@@ -214,19 +214,19 @@ var surveyJSON = {
           "elements": [{
               "type": "image",
               "name": "question4",
-              "visibleIf": "{question1} = 'item1'",
+              "visibleIf": "{SelectedOdour} = 'A'",
               "imageLink": "a.png"
             },
             {
               "type": "image",
               "name": "question4",
-              "visibleIf": "{question1} = 'item2'",
+              "visibleIf": "{SelectedOdour} = 'B'",
               "imageLink": "b.png"
             },
             {
               "type": "image",
               "name": "question4",
-              "visibleIf": "{question1} = 'item3'",
+              "visibleIf": "{SelectedOdour} = 'C'",
               "imageLink": "c.png"
             }
           ],

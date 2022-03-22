@@ -12,12 +12,13 @@ let hMax, vMax, vMin, vW;
 let sliderIcon;
 let undoButton;
 let undoActive = 0;
+let bgTexture;
 
 let sV = [];
 let c;
 let vt;
 let cV;
-
+let bgCol;
 let storedDistance = 1000;
 
 let shapeLayer, tintLayer;
@@ -25,10 +26,8 @@ let shapeLayer, tintLayer;
 
 let centerX, centerY;
 
-let started = 0;
-
 function setup() {
-  canvas = createCanvas(windowWidth, windowHeight);
+  canvas = createCanvas(windowWidth, windowHeight - 70);
   canvas.parent('sketch-holder');
 
 
@@ -36,11 +35,8 @@ function setup() {
   console.log(lang);
   if (lang == "fr") {
     document.getElementById("header").innerHTML = "Si vous le souhaitez, adaptez la forme qui correspond le plus à la couleur. Pour cela, vous pouvez toucher les points et utiliser le curseur sur la gauche pour ajouter ou enlever des détails.";
-    document.getElementById("subtitle").innerHTML = "Si vous le souhaitez, adaptez la forme qui correspond le plus à la couleur. Pour cela, vous pouvez toucher les points et utiliser le curseur sur la gauche pour ajouter ou enlever des détails.";
   } else {
-
-    document.getElementById("header").innerHTML = "Refine your shape";
-    document.getElementById("subtitle").innerHTML = "Move the white dots to change the shape <br> Use the + or - to add or remove points <br> Touch outside the shape to switch between smooth and sharp";
+    document.getElementById("header").innerHTML = "If you want to adapt the shape to correspond more to the odour move the white points around. <br> Use the slider on the left to add or remove points";
   }
 
 
@@ -64,12 +60,15 @@ function setupDrawing() {
 
   sliderImg = createGraphics(windowWidth, windowHeight);
   sliderIcon = loadImage('assets/slider.png');
+  bgTexture = loadImage('assets/texture.png');
   noStroke();
   // stroke(255);
   retrieveCol();
   fill(c);
   let opaque = color(c.levels);
-  opaque.setAlpha(6);
+  let bgCol = color(c.levels);
+  bgCol.setAlpha(200);
+  opaque.setAlpha(4);
   tintLayer.fill(opaque);
 
 
@@ -190,13 +189,6 @@ function interpolate() {
 }
 
 function touchStarted() {
-
-  if (started == 0){
-document.getElementById("header").remove()
-document.getElementById("subtitle").remove()
-    started = 1;
-  }
-
   if (mouseX > (20 * hMax)) { // or, if the slider not touched
     storedDistance = 10000;
 
@@ -308,11 +300,19 @@ function render() {
   shapeLayer.clear();
   tintLayer.clear();
   shapeLayer.stroke(200);
-  shapeLayer.fill(c); //todo - move
+  shapeLayer.fill(5); //todo - move
   //combine via separate layers?
 
   // draw first layer
-  shapeLayer.beginShape();
+    shapeLayer.beginShape();
+
+
+
+shapeLayer.vertex(0, height);
+shapeLayer.vertex(width, height);
+shapeLayer.vertex(width, 0);
+shapeLayer.vertex(0, 0);
+  shapeLayer.beginContour();
   if (smooth) {
 
     shapeLayer.curveVertex(shape[0].x, shape[0].y);
@@ -330,46 +330,51 @@ function render() {
   } else {
     shapeLayer.vertex(shape[0].x, shape[0].y);
   }
+  shapeLayer.endContour();
   shapeLayer.endShape();
 
   //draw all other layers
 
-  // draw first layer
-  let _v;
-  let _d = 0.04;
-  for (let k = 1; k < 10; k++) {
+    // draw first layer
+    let _v;
+    let _d = 0.05;
+for (let k = 1; k < 20; k++){
     tintLayer.beginShape();
     if (smooth) {
-      _v = p5.Vector.lerp(cV, shape[0], 1 + (k * _d));
+      _v = p5.Vector.lerp(cV, shape[0], 1+(k*_d));
       tintLayer.curveVertex(_v.x, _v.y);
     }
     for (i = 0; i < shape.length; i++) {
       if (smooth) {
-        _v = p5.Vector.lerp(cV, shape[i], 1 + (k * _d));
+        _v = p5.Vector.lerp(cV, shape[i], 1+(k*_d));
         tintLayer.curveVertex(_v.x, _v.y);
       } else {
-        _v = p5.Vector.lerp(cV, shape[i], 1 + (k * _d));
+        _v = p5.Vector.lerp(cV, shape[i], 1+(k*_d));
         tintLayer.vertex(_v.x, _v.y);
       }
     }
     if (smooth) {
-      _v = p5.Vector.lerp(cV, shape[0], 1 + (k * _d));
+      _v = p5.Vector.lerp(cV, shape[0], 1+(k*_d));
       tintLayer.curveVertex(_v.x, _v.y);
-      _v = p5.Vector.lerp(cV, shape[1], 1 + (k * _d));
+      _v = p5.Vector.lerp(cV, shape[1], 1+(k*_d));
       tintLayer.curveVertex(_v.x, _v.y);
     } else {
-      _v = p5.Vector.lerp(cV, shape[0], 1 + (k * _d));
+      _v = p5.Vector.lerp(cV, shape[0], 1+(k*_d));
       tintLayer.vertex(_v.x, _v.y);
     }
     tintLayer.endShape();
-  }
+}
 
 
 
 
-  background(20);
-  image(tintLayer, 0, 0, width, height);
+
+  image(bgTexture,0,0,width,height);
+  blendMode(MULTIPLY);
+  background(c);
+  blendMode(BLEND);
   image(shapeLayer, 0, 0, width, height);
+    image(tintLayer, 0, 0, width, height);
 
 
 
@@ -377,7 +382,7 @@ function render() {
   fill(255);
   for (i = 0; i < shape.length; i++) {
 
-    ellipse(shape[i].x, shape[i].y, 12, 12);
+    ellipse(shape[i].x, shape[i].y, 9, 9);
 
     //DEBUGGING TOOL:
     // text(i, shape[i].x, shape[i].y, 100, 100);

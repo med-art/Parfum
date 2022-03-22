@@ -18,6 +18,7 @@ let c;
 let vertexQty;
 
 let shapeOpacity = [255, 255, 255, 255];
+let strokeWeightStorage = [0, 0, 0, 0];
 
 let storedDistance = 1000;
 
@@ -30,9 +31,11 @@ function setup(){
     var lang = localStorage.lang;
     console.log(lang);
     if (lang == "fr"){
-    document.getElementById("header").innerHTML="Choisissez une forme qui correspond à l'odeur que vous sentez.";
+    document.getElementById("header").innerHTML="Choisissez une forme.";
+    document.getElementById("subtitle").innerHTML="Choisissez une forme qui correspond à l'odeur que vous sentez.";
     } else {
-    document.getElementById("header").innerHTML="Please choose a shape that you think corresponds to the odour";
+    document.getElementById("header").innerHTML="Choose a shape";
+    document.getElementById("subtitle").innerHTML="Please choose a shape that you think corresponds to the odour";
     }
 
     noStroke();
@@ -55,14 +58,21 @@ function setup(){
 }
 
 function makeShapes(){
+
+stroke(255);
+
+
     background(0);
       c.setAlpha(shapeOpacity[0]);
+
+      strokeWeight(strokeWeightStorage[0]);
       fill(c);
       //draw an circle top left
       ellipse(sV[0].x, sV[0].y, w, w);
 
       //draw a rectangle top right
       c.setAlpha(shapeOpacity[1]);
+            strokeWeight(strokeWeightStorage[1]);
       fill(c);
       // fill(c); // todo inherit
       rectMode(RADIUS);
@@ -70,7 +80,8 @@ function makeShapes(){
 
       //draw a triangle bottom left
       c.setAlpha(shapeOpacity[2]);
-            fill(c);
+            strokeWeight(strokeWeightStorage[2]);
+      fill(c);
       let curveQty = 3;
       beginShape()
       for (let i = 0; i < curveQty; i++) {
@@ -78,11 +89,12 @@ function makeShapes(){
       let v = createVector((sV[2].x) + (w/2) * cos(angle), (sV[2].y) + (w/2) * sin(angle));
       vertex(v.x, v.y)
       }
-      endShape();
+      endShape(CLOSE);
 
       //draw a hexagon, bottom left
       c.setAlpha(shapeOpacity[3]);
-            fill(c);
+            strokeWeight(strokeWeightStorage[3]);
+      fill(c);
       curveQty = 6;
       beginShape()
       for (let i = 0; i < curveQty; i++) {
@@ -90,7 +102,7 @@ function makeShapes(){
       let v = createVector((sV[3].x) + (w/2) * cos(angle), (sV[3].y) + (w/2) * sin(angle));
         vertex(v.x, v.y)
       }
-      endShape();
+      endShape(CLOSE);
 
 }
 
@@ -116,6 +128,8 @@ function check(){
         localStorage.chosenVertice = vertexQty;
         shapeOpacity = [100, 100, 100, 100];
         shapeOpacity[i] = 255;
+        strokeWeightStorage = [0, 0, 0, 0];
+        strokeWeightStorage[i] = 10;
         makeShapes();
 
   document.getElementById('next').classList.remove('hidden');

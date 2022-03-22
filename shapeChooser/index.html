@@ -32,8 +32,8 @@
     }
 
     #sketch-holder{
-      position: fixed;
-      /* margin-top: 50px; */
+      position: absolute;
+      margin-top: 50px;
       z-index: -10;
     }
 
@@ -72,6 +72,29 @@
         transform: translate(-50%, -50%);
 
       }
+
+
+      h1{
+        position: relative;
+        padding-top: 50px;
+                padding-bottom: 0px;
+            text-align: center;
+            font-size: 3em;
+
+      }
+
+      h2 {
+      transform: translate(0px, -30px);
+      position: relative;
+        color: grey;
+            text-align: center;
+            font-size: 1.5em;
+
+
+    }
+
+    #overlay{
+      /* background: red; */
     }
 
   </style>
@@ -94,11 +117,15 @@
 </head>
 
 <body>
-  <h2 id="header">Please choose a shape that you think corresponds to the odour / Choisissez une forme qui correspond à l'odeur que vous sentez.”</h2>
-  <button type="button" name="button" class="back" onclick="goBack()">Previous</button>
-  <button type="button" name="button" id="next" onclick="next()" class="hidden next">Next</button>
   <div id="sketch-holder">
   </div>
+  <div id="overlay">
+  <button type="button" name="button" class="back" onclick="goBack()">Previous</button>
+  <button type="button" name="button" id="next" onclick="next()" class="hidden next">Next</button>
+  <h1 id="header"></h1>
+  <h2 id="subtitle"></h2>
+  </div>
+
 
 
 </body>

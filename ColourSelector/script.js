@@ -1,6 +1,7 @@
 let squareSwatch, chosenSwatch;
 let buttonBool = 1;
-let disablePicking = 0;
+let disablePicking = 1;
+let colourPicked = 0;
 let c; // colour
 
 
@@ -20,24 +21,24 @@ function setup() {
   var canvas = createCanvas(windowWidth, windowHeight);
 
 
-// get the selected Odour from localStorage, then change the top left hand image to appropriate figure
+  // get the selected Odour from localStorage, then change the top left hand image to appropriate figure
   let selOd = localStorage.getItem("selectedOdour");
   console.log("odour is " + selOd)
-  if (selOd == "A"){
-  document.getElementById("odourImg").src="../common/a.png";
-} else if (selOd == "B"){
-  document.getElementById("odourImg").src="../common/b.png";
-} else {
-  document.getElementById("odourImg").src="../common/c.png";
-}
+  if (selOd == "A") {
+    document.getElementById("odourImg").src = "../common/a.png";
+  } else if (selOd == "B") {
+    document.getElementById("odourImg").src = "../common/b.png";
+  } else {
+    document.getElementById("odourImg").src = "../common/c.png";
+  }
 
-// get the language from localStorage, then set the header to appropriate language
+  // get the language from localStorage, then set the header to appropriate language
   var lang = localStorage.lang;
   console.log(lang);
   if (lang == "fr") {
-    document.getElementById("header").innerHTML = "Choisissez une couleur qui correspond à l'odeur que vous percevez.";
+    document.getElementById("header").innerHTML = "Choisissez une <b>couleur</b> qui correspond à <b>l'odeur</b> que vous percevez.";
   } else {
-    document.getElementById("header").innerHTML = "Please choose a colour that you think corresponds to the odour";
+    document.getElementById("header").innerHTML = "Please choose a <b>colour</b> that you think corresponds to the <b>odour</b>";
   }
 
   canvas.parent('sketch-holder');
@@ -54,13 +55,13 @@ function setup() {
 
 function makeSquares() {
 
-  let adjustHeight = height * 0.85;
+  let adjustHeight = height;
   var rowCount = 9;
   var colCount = 14;
   for (var i = 0; i < rowCount; i++) {
     for (var j = 0; j < colCount; j++) {
       var x = ((width / colCount) * j);
-      var y = ((adjustHeight / rowCount) * i) + (height * 0.15);
+      var y = ((adjustHeight / rowCount) * i);
       var w = (width / colCount);
       var h = (adjustHeight / rowCount);
       var colourtemp = array1[i][j];
@@ -73,17 +74,23 @@ function makeSquares() {
 }
 
 function touchMoved() {
-  if (disablePicking == 0) {
-    selectColour();
-  }
-
+  pickCol();
 }
 
 function mousePressed() {
+  pickCol();
+}
+
+function pickCol() {
   if (disablePicking == 0) {
     selectColour();
+  } else {
+    if (colourPicked == 0) {
+      disablePicking = 0;
+      document.getElementById('titleBox').classList.add('hidden');
+      document.getElementById('titleBox').classList.remove('visible');
+    }
   }
-
 }
 
 function selectColour() {
@@ -93,14 +100,15 @@ function selectColour() {
     chosenSwatch.rect(0, 0, width, height);
     renderBig();
   }
+  colourPicked = 1;
 }
 
 function mouseReleased() {
-  disablePicking = 1;
-  document.getElementById('promptBox').classList.remove('hidden');
-  document.getElementById('promptBox').classList.add('visible');
-  document.getElementById('titleBox').classList.add('hidden');
-  document.getElementById('titleBox').classList.remove('visible');
+  if (colourPicked) {
+    disablePicking = 1;
+    document.getElementById('promptBox').classList.remove('hidden');
+    document.getElementById('promptBox').classList.add('visible');
+  }
 }
 
 function render() {
@@ -110,16 +118,17 @@ function render() {
 }
 
 function renderBig() {
+  console.log("rendering big");
   image(chosenSwatch, 0, 0, width, height);
 }
 
 function goBack() {
-
+  colourPicked = 0;
   disablePicking = 0;
   document.getElementById('promptBox').classList.add('hidden');
   document.getElementById('promptBox').classList.remove('visible');
-  document.getElementById('titleBox').classList.remove('hidden');
-  document.getElementById('titleBox').classList.add('visible');
+  // document.getElementById('titleBox').classList.remove('hidden');
+  // document.getElementById('titleBox').classList.add('visible');
   render();
 }
 

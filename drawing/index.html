@@ -5,11 +5,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
   <title>Thinking Through Drawing Symposium</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+
   <style>
-    @font-face {
-      font-family: AvenirNext;
-      src: url("assets/AvenirNextLTPro-Regular.otf");
-    }
+
 
     body {
       padding: 0;
@@ -21,8 +25,14 @@
       text-align: center;
       height: 100%;
     width: 100%;
-    /* overflow: hidden; */
+    overflow: hidden;
 
+    }
+
+    .fadeOut{
+      /* visibility: hidden; */
+      opacity: 0;
+      transition: opacity 2s 2s linear;
     }
 
     .hidden {
@@ -35,7 +45,8 @@
       z-index: -100;
     }
 
-    button {
+
+    #backnext {
       position: absolute;
       -webkit-appearance: none;
       -moz-appearance: none;
@@ -52,24 +63,18 @@
       /* margin-top: 60%; */
       padding: 0.5em 2.786em 0.6em;
       /* margin-left: 5em; */
-
-    }
-
-    .back {
-      top: 94%;
-      left: 10%;
       -ms-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%);
-
+            top: 94%;
+    }
+    .back {
+      left: 10%;
     }
 
     .next {
-      top: 94%;
       left: 90%;
-      -ms-transform: translate(-50%, -50%);
-      transform: translate(-50%, -50%);
-
     }
+
     h1{
       position: absolute;
       top: 3%;
@@ -78,7 +83,8 @@
       transform: translate(-50%, -50%);
           text-align: center;
           font-size: 1.5em;
-          width: 100%
+          width: 100%;
+          color: black;
 
     }
 
@@ -89,8 +95,9 @@
       -ms-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%);
           text-align: center;
+          font-weight: 500;
           font-size: 1.1em;
-          color: grey;
+          color: dimgrey;
           width: 100%;
 
     }
@@ -99,6 +106,42 @@
     position: inherit;
     }
 
+
+    .material-icons{
+            position: absolute;
+  font-size: 70px;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+
+        left: 5%;
+    }
+
+    #add{
+        top: 60%;
+    }
+    #minus{
+              top: 70%;
+    }
+    #undo{
+    top: 80%;
+    }
+    .disabled{
+      color: rgb(50, 50, 50);
+      pointer-events:none;
+    }
+
+    #infoBox{
+      position: absolute;
+      top: 0%;
+      left: 50%;
+      height: 40%;
+      width: 40%;
+      border-radius: 20px;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      background-color: rgba(255, 255, 255, 0.8);
+      /* opacity: 0.8; */
+    }
 
   </style>
 
@@ -124,10 +167,18 @@
   <div id="sketch-holder">
   </div>
   <div id="overlay">
-    <button type="button" name="button" class="back" onclick="goBack()">Previous</button>
-    <button type="button" name="button" id="next" onclick="next()" class="next">Next</button>
+    <button type="button" name="button" class="back" id="backnext" onclick="goBack()">Previous</button>
+    <button type="button" name="button" class="next" id="backnext" onclick="next()">Next</button>
+
+    <span class="material-icons" id="add" onclick="moreVertices()">add_circle</span>
+    <span class="material-icons" id="minus" onclick="lessVertices()">remove_circle</span>
+    <span class="material-icons disabled" id="undo" onclick="undo()">undo</span>
+<div id="infoBox">
+  </div>
   <h1 id="header"></h1>
   <h2 id="subtitle"></h3>
+
+
 </div>
 </body>
 

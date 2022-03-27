@@ -50,29 +50,6 @@ modernThemeCss["$button-text-color"] = "#000000";
 // modernThemeCss["$text-color"] = "#FFFFFF";
 // modernThemeCss["$text-input-color"] = "#FFFFFF";
 
-function doOnCurrentPageChanged(survey) {
-    var prev = document.getElementById('surveyPrev');
-
-    if (prev)
-        prev.style.display = (
-            !survey.isFirstPage
-            ? "inline"
-            : "none");
-
-    var next = document.getElementById('surveyNext');
-    if (next)
-        next.style.display = (
-            !survey.isLastPage
-            ? "inline"
-            : "none");
-
-        //var complete = document
-        //    .getElementById('surveyComplete');
-        //complete && complete.style
-        //    .display = (survey.isLastPage
-        //        ? "inline"
-        //        : "none");
-    }
 
 
 

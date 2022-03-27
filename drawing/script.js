@@ -2,12 +2,10 @@ let shape = [];
 let archivedShape = [];
 let curveQty = 10;
 // let slider;
-let sliderQty = 0;
-let archivedSlider = 0;
+let desiredQty = 0;
 let chosen;
 let sculptActive;
 let smooth;
-let sliderImg;
 let hMax, vMax, vMin, vW;
 let sliderIcon;
 let undoButton;
@@ -31,7 +29,6 @@ function setup() {
   canvas = createCanvas(windowWidth, windowHeight);
   canvas.parent('sketch-holder');
 
-
   var lang = localStorage.lang;
   console.log(lang);
   if (lang == "fr") {
@@ -43,8 +40,6 @@ function setup() {
     document.getElementById("subtitle").innerHTML = "Move the white dots to change the shape <br> Use the + or - to add or remove points <br> Touch outside the shape to switch between smooth and sharp";
   }
 
-
-
   shapeLayer = createGraphics(width, height);
   shapeLayer.strokeWeight(1);
 
@@ -54,52 +49,38 @@ function setup() {
   noStroke();
   let margin = 200;
   calcDimensions();
-
-  retrieveCol();
+  retrieveDataFromLocal();
   setupDrawing();
 }
 
 
 function setupDrawing() {
 
-  sliderImg = createGraphics(windowWidth, windowHeight);
-  sliderIcon = loadImage('assets/slider.png');
   noStroke();
   // stroke(255);
-  retrieveCol();
+  retrieveDataFromLocal();
   fill(c);
   let opaque = color(c.levels);
   opaque.setAlpha(6);
   tintLayer.fill(opaque);
 
-
+// create the shape based on the VT
   for (let i = 0; i < vt; i++) {
     let angle = ((2 * PI) / vt) * i;
     let v = createVector((width / 2) + (width / 5) * cos(angle), (height / 2) + (width / 5) * sin(angle));
     shape.push(v)
   }
 
-  // slider = createSlider(3, 30, curveQty);
-  // slider.position(10, 10);
-  // slider.style('width', '260px');
-
-
-  //change imported Vertex into slider position
-  let s = int(map(vt, 3, 30, 8 * hMax, height - (8 * hMax))); // tether with below constraint?
-  makeSlider(s);
-
   render();
 }
 
-function retrieveCol() {
+function retrieveDataFromLocal() {
   let importColour = localStorage.chosenColour;
   let chosenColour = importColour.split(",");
   var cccc = chosenColour.map(String);
   c = color(parseInt(chosenColour[0]), parseInt(chosenColour[1]), parseInt(chosenColour[2]), 255);
-
   vt = localStorage.chosenVertice;
-
-
+  desiredQty = vt;
 }
 
 
@@ -116,35 +97,16 @@ function calcDimensions() {
   }
 }
 
-function makeSlider(mY) {
-
-  // make an explicit constraint
-
-  mY = constrain(mY, 8 * hMax, height - (8 * hMax));
-  sliderQty = 1 + int(map(mY, 8 * hMax, height - (8 * hMax), 2, 30)); // tether with below constraint?
-  sliderImg.clear();
-  sliderImg.stroke(125);
-  sliderImg.strokeWeight(7 * hMax);
-  sliderImg.line(8 * hMax, 8 * hMax, 8 * hMax, height - (8 * hMax));
-  sliderImg.stroke(255);
-  sliderImg.strokeWeight(7 * hMax);
-  sliderImg.line(8 * hMax, 8 * hMax, 8 * hMax, mY);
-  sliderImg.imageMode(CENTER);
-  sliderImg.image(sliderIcon, 8 * hMax, mY, 8.5 * hMax, 8.5 * hMax);
-  sliderImg.fill(244);
-  sliderImg.noStroke();
-  sliderImg.text(sliderQty, 12 * hMax, mY, 100, 100);
-
-
-}
 
 
 function interpolate() {
 
-
+  if (!undoActive) {
+    buttonMaker();
+  }
 
   // IF CURVE NEEDS TO INCREASE
-  if (sliderQty > shape.length) {
+  if (desiredQty > shape.length) {
     let maxDist = 1; // 1 is abitrary
     let chosenPoint; // set to nothign to avoid false call
     for (let i = 0; i < shape.length; i++) { // note the -1
@@ -167,7 +129,7 @@ function interpolate() {
     // IF CURVE NEEDS TO DECREASE
     // Run again, but between point 0 and 2, find longest distance, then delete point 1 between them..
 
-  } else if (sliderQty < shape.length) {
+  } else if (desiredQty < shape.length) {
 
 
     let minDist = 10000; // 10000 is abitrary
@@ -184,22 +146,20 @@ function interpolate() {
   }
   render();
 
-  if (sliderQty != shape.length) {
+  if (desiredQty != shape.length) {
     interpolate(); // run again if it does not match
   }
 }
 
 function touchStarted() {
-
-  if (started == 0){
-document.getElementById("header").remove()
-document.getElementById("subtitle").remove()
+  if (started == 0) {
+    document.getElementById("header").classList.add('fadeOut');
+  document.getElementById("subtitle").classList.add('fadeOut');
+    document.getElementById("infoBox").classList.add('fadeOut');
     started = 1;
   }
-
   if (mouseX > (20 * hMax)) { // or, if the slider not touched
     storedDistance = 10000;
-
     for (let i = 0; i < shape.length; i++) {
       let d = dist(mouseX, mouseY, shape[i].x, shape[i].y);
       if (d < storedDistance) {
@@ -207,21 +167,18 @@ document.getElementById("subtitle").remove()
         chosen = i;
       }
     }
-
-
     if (storedDistance < 60) {
       sculptActive = 1;
     } else if (storedDistance > 100) {
       smooth = !smooth;
     }
-
     render();
   }
 }
 
 function mouseDragged() {
   if (mouseX > (20 * hMax)) {
-    // sliderQty = slider.value();
+    // desiredQty = slider.value();
     // IF THE POINTS DON'T MATCH
     if (sculptActive) {
       shape[chosen].x = mouseX;
@@ -237,15 +194,44 @@ function mouseDragged() {
     // if the button is not there, then create it. note use of explicit undoActive.
     // tried checking buttonMaker after deleted, but Boolean still came back positive.
     if (!undoActive) {
-      buttonMaker();
+      // buttonMaker();
     }
-    makeSlider(mouseY);
+    // makeSlider(mouseY);
   }
-  if (!(sliderQty == shape.length)) {
-    interpolate();
+
+  if (!(desiredQty == shape.length)) {
+   interpolate();
   }
   render();
 
+}
+
+function moreVertices(){
+desiredQty++;
+if (desiredQty >= 20){
+    document.getElementById('add').classList.add('disabled');
+}
+if (desiredQty > 3){
+    document.getElementById('minus').classList.remove('disabled');
+}
+// TODO: force the minus button back
+interpolate();
+
+
+}
+
+function lessVertices(){
+desiredQty--;
+if (desiredQty <= 3){
+  document.getElementById('minus').classList.add('disabled');
+  desiredQty = 3;
+  // TODO: remove the minus button
+}
+if (desiredQty < 20){
+    document.getElementById('add').classList.remove('disabled');
+}
+// // TODO: force the add button back
+interpolate();
 }
 
 function touchEnded() {
@@ -254,31 +240,23 @@ function touchEnded() {
 
 function buttonMaker() {
   // first make an archive of the current curve
-  archivedShape = shape.slice();
-  archivedSlider = sliderQty;
-  console.log("archive Created")
-  // TODO: move to separate function for clarity?
   undoActive = 1;
-  undoButton = createButton('undo');
-  undoButton.position(100, mouseY);
-  undoButton.mousePressed(undo);
+  archivedShape = shape.slice();
+  document.getElementById("undo").classList.remove("disabled");
+
 }
 
 function undo() {
   removeButton();
   shape = archivedShape.slice();
-
-  // // TODO: Search for identical syntax (replaced archivedSlider with vt) This is present above, needs to be refined
-  let s = int(map(archivedSlider, 3, 30, 8 * hMax, height - (8 * hMax))); // tether with below constraint?
-  makeSlider(s);
-
+  desiredQty = archivedShape.length;
   console.log("archive retrieved")
   render();
 }
 
 function removeButton() {
   undoActive = 0;
-  undoButton.remove();
+  document.getElementById("undo").classList.add("disabled");
 }
 
 function findCenter() {
@@ -386,7 +364,6 @@ function render() {
 
 
 
-  image(sliderImg, 0, 0, width, height);
 }
 
 function goBack() {

@@ -204,6 +204,7 @@ function mouseDragged() {
   }
   render();
 
+return false;
 }
 
 function moreVertices(){

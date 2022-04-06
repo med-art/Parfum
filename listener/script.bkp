@@ -1,19 +1,46 @@
+//Next
+// change the translate to relative
+//add margins between shapes to ensure nice gappage
+// make the zooming much nicerer.
+
+
 var vertexData; // may want to remove this as a global
 let lastKey; // remove from global?
 let colour;
 let smooth = 0;
 
-let shape = [];
-let shapeLayer;
+let margin = 0;
+
+let shapesOfOdour = [];
+
+let widthCount;
+let heightCount;
+
+let marginW;
+let marginH;
+
+//calculate scalar
+let scalar = 1.0;
+
+let randomised = [];
+
+let len;
+
+let alphaCounter = 0;
+
+let colData;
+
+let gridActive = 0;
 
 // Colour info
 var colourRef = firebase.database().ref('colourLog'); // note, data is seperate RGBA values if ref = colourLog/RGBACol
 // guestRef.on('value', (snapshot) => { // gets all data, including old
 // guestRef.on('child_added', (snapshot, prevChildKey) => { // gets changed (added)
 colourRef.on('child_changed', (snapshot) => {
-  const data = snapshot.val();
-  console.log(data);
-  background(data);
+colData = snapshot.val();
+gridActive = 0;
+alphaCounter = 0;
+makeBackground();
 });
 
 // shape vertex info
@@ -23,65 +50,140 @@ var vertexRef = firebase.database().ref('drawingLog'); // note, data is seperate
 vertexRef.on('child_changed', (snapshot) => {
   vertexData = snapshot.val();
   console.log(vertexData);
-  // retrieve the qty of keys in the data
-  let len = Object.keys(vertexData).length;
-  // get the latest key (the most recent drawing)
-  lastKey = Object.keys(vertexData)[len - 1]
+  // overlayShapes();
 
-  // get the colourRef
-  colour = vertexData[lastKey].colour;
-
-
-  // get the smoothness / / TODO
-
-  // get the vertices
-  let vertexObject = vertexData[lastKey].drawingVertices;
-  // query the qty of vertices
-  let len2 = vertexObject.length;
-  //retreive all vertices for a single shape, and make p5.js vectors
-  shape = [];
-  for (let i = 0; i < len2; i++) {
-    let xy = vertexObject[i];
-    let v = createVector(xy[0], xy[1]);
-    shape.push(v);
-  }
-
- recreateSingleShape();
- rectreateAllShapes();
-
+  boot();
 });
 
-function setup() {
-  createCanvas(windowWidth, windowHeight);
-  shapeLayer = createGraphics(width, height);
+function makeBackground(){
+
+if (!gridActive){
+colData[3] = alphaCounter;
+background(colData);
+alphaCounter++;
+if (alphaCounter < 255){
+  setTimeout(makeBackground, 40);
+} else {
+  alphaCounter = 0;
+}
 }
 
-function recreateSingleShape() {
-  shapeLayer.background(0);
-  shapeLayer.clear();
-  shapeLayer.fill(colour.levels[0], colour.levels[1], colour.levels[2]);
-  //combine via separate layers?
-  shapeLayer.beginShape();
-  if (smooth) {
-    shapeLayer.curveVertex(shape[0].x, shape[0].y);
-    // shapeLayer.curveVertex(shape[1].x, shape[1].y);
-  }
-  for (i = 0; i < shape.length; i++) {
-    if (smooth) {
-      shapeLayer.curveVertex(shape[i].x, shape[i].y);
-    } else {
-      shapeLayer.vertex(shape[i].x, shape[i].y);
-    }
-  }
-  if (smooth) {
-    shapeLayer.curveVertex(shape[0].x, shape[0].y);
-    shapeLayer.curveVertex(shape[1].x, shape[1].y);
-  }
-  shapeLayer.endShape();
+}
 
+function boot() {
+
+gridActive = 1;
+scalar = 1;
+
+  stroke(125);
+  strokeWeight(1);
+  //start with dice roll, to ensure even recall over the loops
+  len = Object.keys(vertexData).length;
+  for (let i = 0; i < 100; i++) {
+    randomised[i] = Math.floor(random(0, len));
+  }
+  gridShapes();
+}
+
+
+function gridShapes() {
+
+
+
+  // start fresh
   background(0);
-  image(shapeLayer,0,0, width, height);
 
 
+  // retrieve the qty of keys in the data
+  widthCount = 7;
+  heightCount = 5;
+
+  margin = width / 20;
+
+  let qty = widthCount * heightCount;
+  let middle = qty / 2;
+
+  // break down into 2x3 grid
+  let pixelsW = width / widthCount;
+  let pixelsH = height / heightCount;
+
+  // determine which value is smaller, to be used to set margins for square
+  let smaller;
+  if (pixelsW >= pixelsH) {
+    smaller = pixelsH;
+  } else {
+    smaller = pixelsW;
+  }
+
+  // now determine margins
+  marginW = pixelsW - smaller + margin;
+  marginH = pixelsH - smaller + margin;
+
+
+  for (let i = 0; i < qty; i++) {
+
+    let selection = 0;
+
+    // if it is the middle unit, then fill it with the latest
+    if (i == middle) {
+      selection = len - 1;
+    } else {
+      // otherwise, randomly select one
+      selection = randomised[i];
+    }
+
+    // get the key itself
+    let key = Object.keys(vertexData)[selection];
+    // get the colour
+    colour = vertexData[key].colour;
+    // now, fill with that colour
+    fill(colour.levels[0], colour.levels[1], colour.levels[2]);
+    //point to where the vertices are stored
+    let vertexObject = vertexData[key].drawingVertices;
+
+
+
+    let qtyX = i % widthCount;
+    let qtyY = Math.floor(i / widthCount);
+
+
+    console.log(scalar);
+
+    push();
+
+    translate((qtyX * pixelsW) + (marginW / 2) - (500*scalar), (qtyY * pixelsH) + (marginH / 2)-(500*scalar));
+
+    beginShape();
+
+    if (smooth) {
+      curveVertex(vertexObject[0][0] * scalar, vertexObject[0][1] * scalar);
+    }
+    for (j = 0; j < vertexObject.length; j++) {
+      if (smooth) {
+        curveVertex(vertexObject[j][0] * scalar, vertexObject[j][1] * scalar);
+      } else {
+        vertex(vertexObject[j][0] * scalar, vertexObject[j][1] * scalar);
+      }
+    }
+    if (smooth) {
+      curveVertex(vertexObject[0][0] * scalar, vertexObject[0][1] * scalar);
+      curveVertex(vertexObject[1][0] * scalar, vertexObject[1][1] * scalar);
+    }
+    endShape();
+
+    pop();
+
+  }
+  scalar -= 0.004;
+  if (scalar > 0.1) {
+    setTimeout(gridShapes, 30);
+  }
+
+
+
+}
+
+function setup(){
+  createCanvas(windowWidth, windowHeight);
 
 }

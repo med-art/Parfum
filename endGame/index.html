@@ -21,6 +21,7 @@ margin-top:10%;
 
 button{
   border-radius: 150px;
+  background-color: white;
   width: 200px;
   height: 200px;
   font-size: 30px;
@@ -40,23 +41,44 @@ button{
   transition: opacity 2s 2s linear;
 }
 
+h4{
+  text-align: center;
+  width: 60vw;
+  margin-left: 20vw;
+}
+
 
 </style>
 <body>
 
+  <h4 id="header"></h1>
 
-<p>On the big screen, see how your drawing and colour compare with other participants for this odour</p>
-
-<button id="endButton1" class="hidden" onclick="another()">Choose another</button>
+<button id="endButton1" class="hidden" onclick="another()">Continue</button>
 <button id="endButton2" class="hidden" onclick="end()">Finish</button>
 
 
 
-<p id="demo"></p>
+
 
 <script>
 
+setup();
+
 setTimeout(reveal, 500);
+
+function setup(){
+  var lang = localStorage.lang;
+  console.log(lang);
+  if (lang == "fr") {
+    document.getElementById("header").innerHTML = "Sur le grand &#xe9;cran, vous pouvez voir votre r&#xe9;sultat et ceux des autres participants pour cette odeur";
+    document.getElementById("endButton1").innerHTML = "Continuez";
+    document.getElementById("endButton2").innerHTML = "Terminer";
+  } else {
+    document.getElementById("header").innerHTML = "On the big screen, see how your drawing and colour compare with other participants for this odour";
+    document.getElementById("endButton1").innerHTML = "Continue";
+    document.getElementById("endButton2").innerHTML = "Finish";
+  }
+}
 
 
 function reveal(){

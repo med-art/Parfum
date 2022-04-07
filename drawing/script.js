@@ -32,8 +32,8 @@ function setup() {
   var lang = localStorage.lang;
   console.log(lang);
   if (lang == "fr") {
-    document.getElementById("header").innerHTML = "Si vous le souhaitez, adaptez la forme qui correspond le plus à la couleur. Pour cela, vous pouvez toucher les points et utiliser le curseur sur la gauche pour ajouter ou enlever des détails.";
-    document.getElementById("subtitle").innerHTML = "Si vous le souhaitez, adaptez la forme qui correspond le plus à la couleur. Pour cela, vous pouvez toucher les points et utiliser le curseur sur la gauche pour ajouter ou enlever des détails.";
+    document.getElementById("header").innerHTML = "Modifier la forme";
+    document.getElementById("subtitle").innerHTML = "Déplacer les points blancs pour modifier la forme <br> Utiliser le + ou - pour ajouter ou enlever des points <br> Toucher l'écran en dehors de la forme pour basculer entre lisse et pointu";
   } else {
 
     document.getElementById("header").innerHTML = "Refine your shape";

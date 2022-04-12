@@ -37,11 +37,11 @@ function setup() {
   console.log(lang);
   if (lang == "fr") {
     document.getElementById("header").innerHTML = "Choisissez une <b>couleur</b> qui correspond à <b>l'odeur</b> que vous percevez.";
-    document.getElementById("promt").innerHTML = "êtes-vous satisfait de la couleur ?";
+    document.getElementById("prompt").innerHTML = "êtes-vous satisfait de la couleur ?";
 
   } else {
     document.getElementById("header").innerHTML = "Please choose a <b>colour</b> that you think corresponds to the <b>odour</b>";
-    document.getElementById("promt").innerHTML = "Happy with this colour?";
+    document.getElementById("prompt").innerHTML = "Happy with this colour?";
   }
 
   canvas.parent('sketch-holder');

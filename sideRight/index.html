@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap" rel="stylesheet">
+
+</head>
+<style media="screen">
+  html,
+  body {
+    height: 100%;
+    width: 100%;
+  }
+
+  body {
+    padding: 0;
+    margin: 0;
+    background-color: black;
+    font-family: "Raleway", sans-serif;
+    font-size: 20px;
+    font-weight: 300;
+    color: white;
+    text-align: center;
+  }
+
+  .roundButton {
+    border-radius: 100px;
+    background: white;
+    width: 200px;
+    height: 200px;
+    font-size: 40px;
+    padding: 5px 5px 5px 5px;
+    margin: 30px 30px 30px 30px;
+    font-weight: 600;
+  }
+
+  img {
+    height: 60vh;
+  }
+
+  h1 {
+    color: lightgrey;
+    font-weight: 400;
+  }
+
+  .emphasis {
+    color: white;
+    font-weight: 600;
+  }
+
+  .centerDiv {
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%
+  }
+
+  .touchDiv {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .hidden {
+    display: none;
+  }
+</style>
+
+<body>
+
+  <div class="centerDiv">
+    <div class="touchDiv" id="hide" onclick="swapHidden()">
+      <div>
+        <img src="Logo.png" alt="Draw me an Odour">
+        <h1>Tap screen to <span class="emphasis">begin</span></h1>
+      </div>
+    </div>
+
+    <div class="hidden" id="reveal">
+      <h1>Please choose a <span class="emphasis">language</span> <br> below to begin</h1>
+      <button class="roundButton" onclick="myFunction('fr')">Fran&#231ais</button>
+      <button class="roundButton" onclick="myFunction('en')">English</button>
+    </div>
+
+  </div>
+
+  <p id="demo"></p>
+
+  <script>
+    localStorage.clear();
+
+    function myFunction(lang) {
+      localStorage.lang = lang;
+      localStorage.side = right;
+      window.location.href = "introForm/index.html";
+    }
+
+    function swapHidden() {
+      console.log("revealing");
+      document.getElementById("reveal").classList.remove("hidden");
+      document.getElementById("hide").classList.add("hidden");
+    }
+  </script>
+
+</body>
+
+</html>

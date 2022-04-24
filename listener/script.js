@@ -50,7 +50,7 @@ var vertexRef = firebase.database().ref('drawingLog'); // note, data is seperate
 // guestRef.on('child_added', (snapshot, prevChildKey) => { // gets changed (added)
 vertexRef.on('child_changed', (snapshot) => {
   vertexData = snapshot.val();
-  console.log(vertexData);
+  // console.log(vertexData);
   // overlayShapes();
 
   boot();
@@ -125,7 +125,7 @@ function gridShapes() {
 
     let selection = 0;
 
-    console.log("middle = "+middle)
+    // console.log("middle = "+middle)
 
     // if it is the middle unit, then fill it with the latest
     if (i == middle) {
@@ -139,6 +139,10 @@ function gridShapes() {
     let key = Object.keys(vertexData)[selection];
     // get the colour
     colour = vertexData[key].colour;
+    //get the relative smoothing
+    smooth = vertexData[key].smoothVal;
+    console.log("VertexData " + vertexData[key]);
+    console.log("SmoothVal " + smooth);
     // now, fill with that colour
     fill(colour.levels[0], colour.levels[1], colour.levels[2]);
     //point to where the vertices are stored
@@ -150,7 +154,7 @@ function gridShapes() {
     let qtyY = Math.floor(i / widthCount);
 
 
-    console.log(globalScalar);
+    // console.log(globalScalar);
 
     let offsetW = (wMargin)/2;
     let offsetH = (hMargin)/2;

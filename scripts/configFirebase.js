@@ -89,8 +89,8 @@
       });
   }
 
-  function logDrawing(id, u, d, w, h, c, od) {
-    console.log(id, u, d, w, h, c);
+  function logDrawing(id, u, d, w, h, c, od, s) {
+    console.log(id, u, d, w, h, c, od, s);
     guest.child(u).child(id).update({
         drawingVertices: d,
         canvasWidth: w,
@@ -100,6 +100,7 @@
         drawingLog.child(od).child(id).update({
           colour: c,
           drawingVertices: d,
+          smoothVal: s,
           canvasWidth: w,
           canvasHeight: h
         })

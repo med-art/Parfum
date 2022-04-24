@@ -5,7 +5,7 @@ let curveQty = 10;
 let desiredQty = 0;
 let chosen;
 let sculptActive;
-let smooth;
+let smooth = 0;
 let hMax, vMax, vMin, vW;
 let sliderIcon;
 let undoButton;
@@ -449,6 +449,7 @@ function next() {
   let userId = localStorage.getItem("id");
   let sessionId = localStorage.getItem("sessionId");
   let odour = localStorage.getItem("selectedOdour")
-  logDrawing(sessionId, userId, vertices, 1000, 1000, c, odour);
+  var smoothInt = smooth ? 1 : 0;
+  logDrawing(sessionId, userId, vertices, 1000, 1000, c, odour, smooth);
 
 }

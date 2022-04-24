@@ -236,11 +236,20 @@ interpolate();
 function touchEnded() {
   sculptActive = 0;
 
-  if (storedDistance > 100) {
-    smooth = !smooth;
-    render();
 
-  }
+}
+
+function smoothSwap(){
+
+    smooth = !smooth;
+    if (smooth){
+      document.getElementById("smootherA").classList.remove("grey");
+        document.getElementById("smootherB").classList.add("grey");
+    } else {
+    document.getElementById("smootherB").classList.remove("grey");
+      document.getElementById("smootherA").classList.add("grey");
+    }
+    render();
 }
 
 function buttonMaker() {

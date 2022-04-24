@@ -127,6 +127,15 @@ overflow: hidden;
         left: 5%;
     }
 
+
+    #smootherA{
+        top: 35%;
+                left: 10%;
+    }
+    #smootherB{
+        top: 35%;
+
+    }
     #add{
         top: 60%;
     }
@@ -139,6 +148,10 @@ overflow: hidden;
     .disabled{
       color: rgb(50, 50, 50);
       pointer-events:none;
+    }
+
+    .grey{
+      color: rgb(50, 50, 50);
     }
 
     #infoBox{
@@ -181,6 +194,8 @@ overflow: hidden;
     <button type="button" name="button" class="back" id="backnext" onclick="goBack()">Previous</button>
     <button type="button" name="button" class="next" id="backnext" onclick="next()">Next</button>
 
+      <span class="material-icons grey" id="smootherA" onclick="smoothSwap()">circle</span>
+    <span class="material-icons" id="smootherB" onclick="smoothSwap()">square</span>
     <span class="material-icons" id="add" onclick="moreVertices()">add_circle</span>
     <span class="material-icons" id="minus" onclick="lessVertices()">remove_circle</span>
     <span class="material-icons disabled" id="undo" onclick="undo()">undo</span>

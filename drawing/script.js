@@ -171,6 +171,8 @@ function touchStarted() {
       sculptActive = 1;
     } else if (storedDistance > 100) {
       smooth = !smooth;
+      render();
+      return;
     }
     render();
   }

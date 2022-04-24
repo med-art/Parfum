@@ -189,35 +189,35 @@ var surveyJSON = {
         "choices": [{
             "value": "Asia",
             "text": {
-              "fr":"Asia",
+              "fr":"Asie",
               "en":"Asia"
             },
           },
           {
             "value": "Africa",
             "text": {
-              "fr":"Africa",
+              "fr":"Afrique",
               "en":"Africa"
             },
           },
           {
             "value": "North America",
             "text": {
-              "fr":"North America",
+              "fr":"Amérique du Nord",
               "en":"North America"
             },
           },
           {
             "value": "South America",
             "text": {
-              "fr":"South America",
+              "fr":"Amérique du Sud",
               "en":"South America"
             },
           },
           {
             "value": "Antarctica",
             "text": {
-              "fr":"Antarctica",
+              "fr":"Antarctique",
               "en":"Antarctica"
             },
           },
@@ -231,7 +231,7 @@ var surveyJSON = {
           {
             "value": "Australia/Oceania",
             "text": {
-              "fr":"Australia/Oceania",
+              "fr":"Australie/Océanie",
               "en":"Australia/Oceania"
             },
           },

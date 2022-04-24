@@ -85,11 +85,11 @@ var surveyJSON = {
         "imageWidth": 100
       }],
       "title": {
-        "fr": "Odour Sélectionnez",
-        "en": "Odour Selection"
+        "fr": "Sélectionnez une odeur",
+        "en": "Select an Odour"
       },
       "description": {
-        "fr": "Choisissez une odeur parmi s 'A', 'B', 'C' et attrapez le dispositif correspondant.",
+        "fr": "Choisissez une odeur parmi 'A', 'B', 'C' et utilisez le dispositif olfactif correspondant.",
         "en": "Please select any of the odours labelled with the letter 'A', 'B' or 'C', and choose the corresponding letter below."
       }
     },
@@ -131,21 +131,21 @@ var surveyJSON = {
           "isRequired": true,
           "rateMax": 7,
           "minRateDescription": {
-            "fr": "Tres desagreable",
+            "fr": "Très désagréable",
             "en": "Very unpleasant"
           },
           "maxRateDescription": {
-            "fr": "Tres agreable",
+            "fr": "Très agréable",
             "en": "Very pleasant"
           },
         }
       ],
       "title": {
-        "fr": "Hédonicité (apprécier ou désapprouver)",
+        "fr": "Hédonicité (apprécier ou ne pas apprécier)",
         "en": "Hedonicity (like or dislike)"
       },
       "description": {
-        "fr": "Notez en fonction de votre perception sur l'hédonisme de tres desagreable a tres agreable. (4) pour Neutre",
+        "fr": "Notez en fonction de votre perception de 'très désagréable' à 'très agréable' (4) pour Neutre",
         "en": "Rate according to your perceived Hedonicity from 'Very Unpleasant' (1) to ‘Very Pleasing’ (7). Neutral is (4)."
       },
     },
@@ -187,11 +187,11 @@ var surveyJSON = {
           "isRequired": true,
           "rateMax": 7,
           "minRateDescription": {
-            "fr": "Jamais senti",
+            "fr": "Jamais sentie",
             "en": "Never Smelt"
           },
           "maxRateDescription": {
-            "fr": "Peut identifier",
+            "fr": "Déjà sentie",
             "en": "Can identify"
           },
         }
@@ -202,7 +202,7 @@ var surveyJSON = {
 
       },
       "description": {
-        "fr": "Notez en fonction de votre perception sur la familiarité sur l’Odeur de ‘Jamais senti’(1) a ‘Identification définitive de cette odeur’(7). (4) pour Neutre",
+        "fr": "Notez en fonction de votre perception de 'odeur inconnue' à 'odeur connue.' (4) pour Neutre",
         "en": "Rate according to your familiarity with the Odour from Never smelt (1) to Definite identification of this smell (7). Neutral is (4)."
       },
     },
@@ -243,7 +243,7 @@ var surveyJSON = {
           "isRequired": true,
           "rateMax": 7,
           "minRateDescription": {
-            "fr": "l’Odeur de ‘Pas d’odeur’",
+            "fr": "l’Odeur de ‘sans odeur’",
             "en": "No smell"
           },
           "maxRateDescription": {

@@ -22,117 +22,121 @@ let strokeWeightStorage = [0, 0, 0, 0];
 
 let storedDistance = 1000;
 
-function setup(){
+function setup() {
 
 
-   canvas = createCanvas(windowWidth, windowHeight-150);
-    canvas.parent('sketch-holder');
+  canvas = createCanvas(windowWidth, windowHeight - 150);
+  canvas.parent('sketch-holder');
 
-    var lang = localStorage.lang;
-    console.log(lang);
-    if (lang == "fr"){
-    document.getElementById("header").innerHTML="Choisissez une forme.";
-    document.getElementById("subtitle").innerHTML="Choisissez une forme qui correspond à l'odeur que vous sentez.";
-    } else {
-    document.getElementById("header").innerHTML="Choose a shape";
-    document.getElementById("subtitle").innerHTML="Please choose a shape that you think corresponds to the odour";
-    }
+  var lang = localStorage.lang;
+  console.log(lang);
+  if (lang == "fr") {
+    document.getElementById("header").innerHTML = "Choisissez une forme.";
+    document.getElementById("subtitle").innerHTML = "Choisissez une forme qui correspond à l'odeur que vous sentez.";
+    document.getElementById("back").innerHTML = "Précédent";
+    document.getElementById("next").innerHTML = "Suivant";
+  } else {
+    document.getElementById("header").innerHTML = "Choose a shape";
+    document.getElementById("subtitle").innerHTML = "Please choose a shape that you think corresponds to the odour";
+    document.getElementById("back").innerHTML = "Previous";
+    document.getElementById("next").innerHTML = "Next";
+  }
 
-    noStroke();
-    retrieveCol();
+  noStroke();
+  retrieveCol();
 
-    let margin = 200;
-    calcDimensions();
+  let margin = 200;
+  calcDimensions();
 
 
-    //declare window
-    w = vMin*40;
+  //declare window
+  w = vMin * 40;
 
-    // make 4 vectors
-    sV[0] = createVector(width*0.1, height*0.5, 20);
-    sV[1] = createVector(width*0.366, height*0.5, 4);
-    sV[2] = createVector(width*0.633, height*0.5, 3);
-    sV[3] = createVector(width*0.9, height*0.5, 6);
+  // make 4 vectors
+  sV[0] = createVector(width * 0.1, height * 0.5, 20);
+  sV[1] = createVector(width * 0.366, height * 0.5, 4);
+  sV[2] = createVector(width * 0.633, height * 0.5, 3);
+  sV[3] = createVector(width * 0.9, height * 0.5, 6);
 
-    makeShapes();
+  makeShapes();
 }
 
-function makeShapes(){
+function makeShapes() {
 
-stroke(255);
+  stroke(255);
 
 
-    background(0);
-      c.setAlpha(shapeOpacity[0]);
+  background(0);
+  c.setAlpha(shapeOpacity[0]);
 
-      strokeWeight(strokeWeightStorage[0]);
-      fill(c);
-      //draw an circle top left
-      ellipse(sV[0].x, sV[0].y, w, w);
+  strokeWeight(strokeWeightStorage[0]);
+  fill(c);
+  //draw an circle top left
+  ellipse(sV[0].x, sV[0].y, w, w);
 
-      //draw a rectangle top right
-      c.setAlpha(shapeOpacity[1]);
-            strokeWeight(strokeWeightStorage[1]);
-      fill(c);
-      // fill(c); // todo inherit
-      rectMode(RADIUS);
-      rect(sV[1].x, sV[1].y, w/2, w/2);
+  //draw a rectangle top right
+  c.setAlpha(shapeOpacity[1]);
+  strokeWeight(strokeWeightStorage[1]);
+  fill(c);
+  // fill(c); // todo inherit
+  rectMode(RADIUS);
+  rect(sV[1].x, sV[1].y, w / 2, w / 2);
 
-      //draw a triangle bottom left
-      c.setAlpha(shapeOpacity[2]);
-            strokeWeight(strokeWeightStorage[2]);
-      fill(c);
-      let curveQty = 3;
-      beginShape()
-      for (let i = 0; i < curveQty; i++) {
-      let angle = (((2 * PI) / curveQty) * i)+(1.5*PI);
-      let v = createVector((sV[2].x) + (w/2) * cos(angle), (sV[2].y) + (w/2) * sin(angle));
-      vertex(v.x, v.y)
-      }
-      endShape(CLOSE);
+  //draw a triangle bottom left
+  c.setAlpha(shapeOpacity[2]);
+  strokeWeight(strokeWeightStorage[2]);
+  fill(c);
+  let curveQty = 3;
+  beginShape()
+  for (let i = 0; i < curveQty; i++) {
+    let angle = (((2 * PI) / curveQty) * i) + (1.5 * PI);
+    let v = createVector((sV[2].x) + (w / 2) * cos(angle), (sV[2].y) + (w / 2) * sin(angle));
+    vertex(v.x, v.y)
+  }
+  endShape(CLOSE);
 
-      //draw a hexagon, bottom left
-      c.setAlpha(shapeOpacity[3]);
-            strokeWeight(strokeWeightStorage[3]);
-      fill(c);
-      curveQty = 6;
-      beginShape()
-      for (let i = 0; i < curveQty; i++) {
-        let angle = (((2 * PI) / curveQty) * i)+(1.5*PI);
-      let v = createVector((sV[3].x) + (w/2) * cos(angle), (sV[3].y) + (w/2) * sin(angle));
-        vertex(v.x, v.y)
-      }
-      endShape(CLOSE);
+  //draw a hexagon, bottom left
+  c.setAlpha(shapeOpacity[3]);
+  strokeWeight(strokeWeightStorage[3]);
+  fill(c);
+  curveQty = 6;
+  beginShape()
+  for (let i = 0; i < curveQty; i++) {
+    let angle = (((2 * PI) / curveQty) * i) + (1.5 * PI);
+    let v = createVector((sV[3].x) + (w / 2) * cos(angle), (sV[3].y) + (w / 2) * sin(angle));
+    vertex(v.x, v.y)
+  }
+  endShape(CLOSE);
 
 }
 
-function retrieveCol(){
+function retrieveCol() {
   let importColour = localStorage.chosenColour;
   let chosenColour = importColour.split(",");
   var cccc = chosenColour.map(String);
   c = color(parseInt(chosenColour[0]), parseInt(chosenColour[1]), parseInt(chosenColour[2]), 255);
 }
 
-function touchStarted(){
+function touchStarted() {
   check();
 }
 
-function touchMoved(){
+function touchMoved() {
   check();
 }
 
-function check(){
-  for (let i = 0; i < sV.length; i++){
-    if (dist(mouseX, mouseY, sV[i].x, sV[i].y) < w){
+function check() {
+  for (let i = 0; i < sV.length; i++) {
+    if (dist(mouseX, mouseY, sV[i].x, sV[i].y) < w) {
       vertexQty = sV[i].z;
-        localStorage.chosenVertice = vertexQty;
-        shapeOpacity = [100, 100, 100, 100];
-        shapeOpacity[i] = 255;
-        strokeWeightStorage = [0, 0, 0, 0];
-        strokeWeightStorage[i] = 10;
-        makeShapes();
+      localStorage.chosenVertice = vertexQty;
+      shapeOpacity = [100, 100, 100, 100];
+      shapeOpacity[i] = 255;
+      strokeWeightStorage = [0, 0, 0, 0];
+      strokeWeightStorage[i] = 10;
+      makeShapes();
 
-  document.getElementById('next').classList.remove('hidden');
+      document.getElementById('next').classList.remove('hidden');
     }
   }
 }
@@ -150,15 +154,15 @@ function calcDimensions() {
   }
 }
 
-function goBack(){
-console.log("Going Backwards");
-window.location.href = "../ColourSelector/index.html";
+function goBack() {
+  console.log("Going Backwards");
+  window.location.href = "../ColourSelector/index.html";
 }
 
-function next(){
-console.log("Going Forwards");
-let userId = localStorage.getItem("id");
-let sessionId = localStorage.getItem("sessionId");
-logShape(sessionId, userId, vertexQty);
-// window.location.href = "../Blob-slider/index.html"; // moved to firebaseConfig, to avoid async issues
+function next() {
+  console.log("Going Forwards");
+  let userId = localStorage.getItem("id");
+  let sessionId = localStorage.getItem("sessionId");
+  logShape(sessionId, userId, vertexQty);
+  // window.location.href = "../Blob-slider/index.html"; // moved to firebaseConfig, to avoid async issues
 }

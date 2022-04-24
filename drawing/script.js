@@ -169,10 +169,6 @@ function touchStarted() {
     }
     if (storedDistance < 60) {
       sculptActive = 1;
-    } else if (storedDistance > 100) {
-      smooth = !smooth;
-      render();
-      return; //bug, this should not be necessary. Nor should the render above it, but for some reason this oscillates between smooth and not. So I am forcing the return.
     }
     render();
   }
@@ -239,6 +235,12 @@ interpolate();
 
 function touchEnded() {
   sculptActive = 0;
+
+  if (storedDistance > 100) {
+    smooth = !smooth;
+    render();
+
+  }
 }
 
 function buttonMaker() {

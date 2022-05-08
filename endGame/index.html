@@ -91,7 +91,14 @@ function reveal(){
 
 function end() {
     // localStorage.lang = lang;
-    window.location.href = "../index.html";
+    let side = localStorage.getItem("side");
+    if (side == "right"){
+      window.location.href = "../sideRight/index.html";
+    } else {
+      window.location.href = "../sideLeft/index.html";
+    }
+
+
 }
 function another() {
     // localStorage.lang = lang;

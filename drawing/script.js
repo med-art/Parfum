@@ -449,7 +449,8 @@ function next() {
   let userId = localStorage.getItem("id");
   let sessionId = localStorage.getItem("sessionId");
   let odour = localStorage.getItem("selectedOdour")
-  var smoothInt = smooth ? 1 : 0;
-  logDrawing(sessionId, userId, vertices, 1000, 1000, c, odour, smooth);
+  //var smoothInt = smooth ? 1 : 0;
+  let side = localStorage.getItem("side");
+  logDrawing(sessionId, userId, vertices, 1000, 1000, c, odour, smooth, side);
 
 }

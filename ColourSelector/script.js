@@ -139,7 +139,10 @@ function proceed() {
   disablePicking = 1;
   let userId = localStorage.getItem("id");
   let sessionId = localStorage.getItem("sessionId");
+  let side = localStorage.getItem("side");
   localStorage.chosenColour = c;
+  let packet = c  // packet is 5 values made out of 4 RGBA vals + a side = 0 is left, 1 is right.
+  c[4] = side; // adding the side as the 5th val, 0 is left, right is 1/
   logColour(sessionId, userId, c);
   // window.location.href = "../shapeChooser/index.html"; // moved to firebase promise chain under logColour to avoid async issues.
 }

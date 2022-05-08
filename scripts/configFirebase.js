@@ -89,7 +89,7 @@
       });
   }
 
-  function logDrawing(id, u, d, w, h, c, od, s) {
+  function logDrawing(id, u, d, w, h, c, od, s, side) {
     console.log(id, u, d, w, h, c, od, s);
     guest.child(u).child(id).update({
         drawingVertices: d,
@@ -101,6 +101,7 @@
           colour: c,
           drawingVertices: d,
           smoothVal: s,
+          tabletSide: side,
           canvasWidth: w,
           canvasHeight: h
         })

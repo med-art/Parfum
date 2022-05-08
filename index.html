@@ -76,13 +76,20 @@
   <div class="centerDiv">
     <div class="touchDiv" id="hide" onclick="swapHidden()">
       <div>
-        <img src="Logo.png" alt="Draw me an Odour">
+        <img src="../Logo.png" alt="Draw me an Odour">
         <h1>Tap screen to <span class="emphasis">begin</span></h1>
+        <h1>Appuyez sur l’écran pour<span class="emphasis">commencer</span></h1>
+
+
       </div>
     </div>
 
     <div class="hidden" id="reveal">
+      <h1>Choisissez une<span class="emphasis">langue</span> <br> pour commencer </h1>
       <h1>Please choose a <span class="emphasis">language</span> <br> below to begin</h1>
+
+
+
       <button class="roundButton" onclick="myFunction('fr')">Fran&#231ais</button>
       <button class="roundButton" onclick="myFunction('en')">English</button>
     </div>
@@ -96,8 +103,9 @@
 
     function myFunction(lang) {
       localStorage.lang = lang;
-      localStorage.side = "left"; // note this is the root page
-      window.location.href = "introForm/index.html";
+      localStorage.side = "left";
+      window.location.href = "../introForm/index.html";
+
     }
 
     function swapHidden() {

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Thinking Through Drawing Symposium</title>
+  <style>
+    @font-face {
+      font-family: AvenirNext;
+      src: url("assets/AvenirNextLTPro-Regular.otf");
+    }
+    body {
+      padding: 0;
+      margin: 0 0 0 0;
+      background-color: black;
+     font-family: "Roboto", sans-serif;
+     font-weight: 100;
+    color: white;
+    text-align: center;
+    /* height: 100vh;
+    width: 100vw; */
+    overflow: hidden;
+    }
+
+    .hidden{
+      visibility: hidden;
+    }
+
+    #sketch-holder{
+      position: fixed;
+      /* margin-top: 50px; */
+      z-index: -10;
+    }
+
+    button{
+      position: absolute;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        /* border: none; */
+        border-width: 1px;
+        border-radius: 1.214em;
+        background-color: rgb(192, 192, 192);
+        color: #000000;
+        cursor: pointer;
+        font-size: 1.03em;
+        font-weight: bold;
+        outline: none;
+        /* margin-top: 60%; */
+        padding: 0.5em 2.786em 0.6em;
+        /* margin-left: 5em; */
+
+      }
+
+      .back{
+        top: 94%;
+        left: 10%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+
+      }
+
+      .next{
+        top: 94%;
+        left: 90%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+
+      }
+    }
+
+  </style>
+
+  <!-- <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css"> -->
+  <!-- <script src="assets/jquery-3.4.1.min.js"></script> -->
+
+  <!-- <link rel="stylesheet" href="stylesheet.css"> -->
+  <script src="../../libraries/p5.js"></script>
+
+
+
+
+  <script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-database.js"></script>
+  <script src="../../scripts/configFirebase.js" type="text/javascript"></script>
+
+  <script src="script.js"></script>
+
+</head>
+
+<body>
+
+  <div id="sketch-holder">
+  </div>
+
+
+</body>
+
+</html>

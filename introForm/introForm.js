@@ -274,44 +274,44 @@ $("#surveyContainer").Survey({
 
 
 
-// Using jQuery (but could use pure JS with cross-browser event handlers):
-var idleSeconds = 35;
-// below timer copied from
-// https://stackoverflow.com/questions/7071472/javascript-timeout-when-no-actions-from-user-for-specified-time
-
-$(function(){
-  var idleTimer;
-  var warningTimer;
-  function resetTimer(){
-    clearTimeout(idleTimer);
-    clearTimeout(warningTimer);
-    idleTimer = setTimeout(whenUserIdle,idleSeconds*1000);
-    warningTimer = setTimeout(warnTimeout, (idleSeconds/2)*1000);
-  }
-
-  $(document.body).bind('mousemove keydown click',resetTimer); //space separated events list that we want to monitor
-  resetTimer(); // Start the timer when the page loads
-
-});
-
-function whenUserIdle(){
-  console.log("User idle, resetting");
-  {
-      window.location.href = "../index.html";
-  }
-}
-
-function warnTimeout(){
-    modal.style.display = "block";
-
-}
-
-// below modal code sourced from
-var modal = document.getElementById("myModal");
-
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  console.log(event.target);
-    modal.style.display = "none";
-}
+// // Using jQuery (but could use pure JS with cross-browser event handlers):
+// var idleSeconds = 35;
+// // below timer copied from
+// // https://stackoverflow.com/questions/7071472/javascript-timeout-when-no-actions-from-user-for-specified-time
+//
+// $(function(){
+//   var idleTimer;
+//   var warningTimer;
+//   function resetTimer(){
+//     clearTimeout(idleTimer);
+//     clearTimeout(warningTimer);
+//     idleTimer = setTimeout(whenUserIdle,idleSeconds*1000);
+//     warningTimer = setTimeout(warnTimeout, (idleSeconds/2)*1000);
+//   }
+//
+//   $(document.body).bind('mousemove keydown click',resetTimer); //space separated events list that we want to monitor
+//   resetTimer(); // Start the timer when the page loads
+//
+// });
+//
+// function whenUserIdle(){
+//   console.log("User idle, resetting");
+//   {
+//       window.location.href = "../index.html";
+//   }
+// }
+//
+// function warnTimeout(){
+//     modal.style.display = "block";
+// 
+// }
+//
+// // below modal code sourced from
+// var modal = document.getElementById("myModal");
+//
+//
+// // When the user clicks anywhere outside of the modal, close it
+// window.onclick = function(event) {
+//   console.log(event.target);
+//     modal.style.display = "none";
+// }

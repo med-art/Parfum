@@ -21,6 +21,7 @@ let heightCount;
 let globalScalar = 1.0;
 
 let randomised = [];
+let randomisedScale = [];
 
 let len;
 
@@ -31,21 +32,25 @@ let colData;
 let gridActive = 0;
 
 let noiseOffset = 0;
-let noiseWidth = 100;
+let noiseWidth = 50;
 
 let _side = "right";
+
+let timeoutCounter = 0;
 
 // Colour info
 var colourRef = firebase.database().ref('colourLog'); // note, data is seperate RGBA values if ref = colourLog/RGBACol
 // guestRef.on('value', (snapshot) => { // gets all data, including old
 // guestRef.on('child_added', (snapshot, prevChildKey) => { // gets changed (added)
 colourRef.on('child_changed', (snapshot) => {
-colData = snapshot.val();
-gridActive = 0;
-alphaCounter = 0;
-if (colData[4] == "right"){
-makeBackground();
-}
+  let tempColData = snapshot.val();
+  alphaCounter = 0;
+  if (tempColData[4] == "right") {
+    colData = tempColData;
+    timeoutCounter = 0;
+    gridActive = 0;
+    makeBackgroundRight();
+  }
 });
 
 // shape vertex info
@@ -58,62 +63,65 @@ vertexRef.on('child_changed', (snapshot) => {
   // overlayShapes();
 
   len = Object.keys(vertexData).length;
-let key = Object.keys(vertexData)[len-1];
-_side = vertexData[key].tabletSide;
+  let key = Object.keys(vertexData)[len - 1];
+  _side = vertexData[key].tabletSide;
 
-if (_side == "right"){
-  boot();
-}
+  if (_side == "right") {
+    bootRight();
+  }
 });
 
-function makeBackground(){
-
-if (!gridActive){
-colData[3] = alphaCounter;
-background(colData[0], colData[1], colData[2], colData[3]);
-alphaCounter++;
-if (alphaCounter < 255){
-  setTimeout(makeBackground, 40);
-} else {
-  alphaCounter = 0;
+function makeBackgroundRight() {
+  if (!gridActive) {
+    alphaCounter++;
+    if (alphaCounter < 255) {
+      let ccF = color(colData[0], colData[1], colData[2]);
+      let ccT = color(0, 0, 0);
+      let l = lerpColor(ccT, ccF, alphaCounter/100);
+            background(l);
+    } else if (alphaCounter > 500) {
+      let ccF = color(colData[0], colData[1], colData[2]);
+      let ccT = color(0, 0, 0);
+      let l = lerpColor(ccF, ccT, (alphaCounter-500)/100);
+      background(l);
+    }
+    if (alphaCounter < 800){
+      setTimeout(makeBackgroundRight, 40);
+    }
+  }
 }
-}
 
-}
-
-function boot() {
-
-
-
-gridActive = 1;
-globalScalar = 1;
-
+function bootRight() {
+  gridActive = 1;
+  globalScalar = 1;
   // stroke(125);
   // strokeWeight(1);
   //start with dice roll, to ensure even recall over the loops
   len = Object.keys(vertexData).length;
   for (let i = 0; i < 100; i++) {
     randomised[i] = Math.floor(random(0, len));
+    randomisedScale[i] = random(0.4, 1);
   }
-
-
-  gridShapes();
+  timeoutCounter = 0;
+  gridShapesRight();
 }
 
 
-function gridShapes() {
-
-background(0);
+function gridShapesRight() {
+if (gridActive){
+  background(0);
 
 
   // retrieve the qty of keys in the data
-  widthCount = 4;
-  heightCount = 6;
+  widthCount = 7;
+  heightCount = 13;
 
   margin = width / 20;
 
   let qty = widthCount * heightCount;
-  let middle = Math.floor(qty / 2);
+
+  let middle = Math.floor(qty / 2); // this is wrong you dumbass
+  console.log(middle);
 
   // break down into 2x3 grid
   let pixelsW = width / widthCount;
@@ -140,7 +148,8 @@ background(0);
 
     // if it is the middle unit, then fill it with the latest
     if (i == middle) {
-      selection = len-1;
+      selection = len - 1;
+      randomisedScale[i] = 1;
     } else {
       // otherwise, randomly select one
       selection = randomised[i];
@@ -150,6 +159,7 @@ background(0);
     let key = Object.keys(vertexData)[selection];
     // get the colour
     colour = vertexData[key].colour;
+    drawingContext.shadowColor = 'rgba(' + colour.levels[0] + "," + colour.levels[1] + "," + colour.levels[2] + ", 0.18)";
     //get the relative smoothing
     smooth = vertexData[key].smoothVal;
     // now, fill with that colour
@@ -165,57 +175,75 @@ background(0);
 
     // console.log(globalScalar);
 
-    let offsetW = (wMargin)/2;
-    let offsetH = (hMargin)/2;
+    let offsetW = (wMargin);
+    let offsetH = (hMargin);
+
+
 
     push();
 
 
-    translate((-width/2+offsetW)*(globalScalar*10), (-height/2+offsetH)*(globalScalar*10));
-    scale(1+(globalScalar*10));
-    // translate(width/2, height/2);
-    translate((qtyX * pixelsW)+wMargin/2, (qtyY * pixelsH)+hMargin/2);
-    // translate(pixelsW/4, 0);
+    translate((-width / 2 + offsetW) * (globalScalar * 10), (-height / 2 + offsetH) * (globalScalar * 10));
+    scale(1 + (globalScalar * 10));
+
+    translate((qtyX * pixelsW) + wMargin / 2, (qtyY * pixelsH) + hMargin / 2);
 
     //calc noise then move
     noiseOffset += 0.00005;
-    let xoff = (noise(noiseOffset + (i*120202))-0.5) * noiseWidth;
-    let yoff = (noise(noiseOffset + (i*13220202))-0.5) * noiseWidth;
-    translate(xoff*(1-globalScalar), yoff*(1-globalScalar));
+    let xoff = (noise(noiseOffset + (i * 120202)) - 0.5) * noiseWidth;
+    let yoff = (noise(noiseOffset + (i * 13220202)) - 0.5) * noiseWidth;
+    translate(xoff * (1 - globalScalar), yoff * (1 - globalScalar));
 
     beginShape();
 
-    let localScalar = 0.1;
+    let localScalar = 0.04 * randomisedScale[i];
 
     if (smooth) {
-      curveVertex(vertexObject[0][0]*localScalar, vertexObject[0][1]*localScalar);
+      curveVertex(vertexObject[0][0] * localScalar, vertexObject[0][1] * localScalar);
     }
     for (j = 0; j < vertexObject.length; j++) {
       if (smooth) {
-        curveVertex(vertexObject[j][0]*localScalar, vertexObject[j][1]*localScalar);
+        curveVertex(vertexObject[j][0] * localScalar, vertexObject[j][1] * localScalar);
       } else {
-        vertex(vertexObject[j][0]*localScalar, vertexObject[j][1]*localScalar);
+        vertex(vertexObject[j][0] * localScalar, vertexObject[j][1] * localScalar);
       }
     }
     if (smooth) {
-      curveVertex(vertexObject[0][0]*localScalar, vertexObject[0][1]*localScalar);
-      curveVertex(vertexObject[1][0]*localScalar, vertexObject[1][1]*localScalar);
+      curveVertex(vertexObject[0][0] * localScalar, vertexObject[0][1] * localScalar);
+      curveVertex(vertexObject[1][0] * localScalar, vertexObject[1][1] * localScalar);
     }
     endShape();
 
     pop();
 
   }
-  globalScalar -= globalScalar*(0.005); // multiplying by itself to slow the transition down (as the number effectively gets smaller)
-  if (globalScalar > 0 && gridActive) {
-    setTimeout(gridShapes, 30);
+
+
+  // TIMEOUT COUNTER - needs to include gridActive
+  timeoutCounter++;
+  if (timeoutCounter > 2000) {
+    gridActive = 0;
+    background(0);
+    timeoutCounter = 0;
   }
 
+  //
+  globalScalar -= globalScalar * (0.005); // multiplying by itself to slow the transition down (as the number effectively gets smaller)
+  if (globalScalar > 0 && gridActive) {
+    setTimeout(gridShapesRight, 30);
+  }
+}
 
 
 }
 
-function setup(){
+function setup() {
   createCanvas(windowWidth, windowHeight);
+
+  drawingContext.shadowOffsetX = 10;
+  drawingContext.shadowOffsetY = 20;
+  drawingContext.shadowBlur = 12;
+  drawingContext.shadowColor = 'white';
+  noStroke();
 
 }
